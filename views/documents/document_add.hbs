@@ -1,0 +1,48 @@
+{{>main_head}}
+
+<div class="container site-main">
+    <form action="/documents/add" method="post">
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="contractor_id">Контрагент</label>
+                <select class="form-control" id="contractor_id" name="contractor_id" size="{{contractors_list.length}}">
+                    {{#each contractors_list}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="payment_method_id">Тип платежа</label>
+                {{#each payment_methods_list}}
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="payment_method_id" value="{{this.id}}" checked>
+                            {{this.name}}
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="document_type_id">Тип документа</label>
+                {{#each document_types_list}}
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="document_type_id" value="{{this.id}}" checked>
+                        {{this.name}}
+                    </label>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

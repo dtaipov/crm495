@@ -1,0 +1,156 @@
+/* Класс аналогичный fancytree-selected */
+.extra-action {
+    background: #d1e9f7;
+    text-shadow: rgba(255,255,255,.5) 1px 1px, rgba(100,100,100,.3) 3px 7px 3px;
+    user-select: none;
+    padding: 1em 2em;
+    outline: none;
+    border-radius: 3px / 100%;
+    background-image:
+            linear-gradient(45deg, rgba(255,255,255,.0) 30%, rgba(255,255,255,.8), rgba(255,255,255,.0) 70%),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 20%, rgba(255,255,255,0) 90%, rgba(255,255,255,.3)),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 45%, rgba(255,255,255,0)),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 45%, rgba(255,255,255,0)),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 45%, rgba(255,255,255,0)),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 45%, rgba(255,255,255,0));
+    background-repeat: no-repeat;
+    background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
+    background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+    box-shadow: rgba(0,0,0,.5) 3px 10px 10px -10px;
+}
+
+table.fancytree-ext-table {
+    width: 100%;
+
+}
+
+table.fancytree-ext-table tbody tr td {
+    padding: 10px 10px 10px 10px;
+}
+
+.treetable {
+    background: #F8F8F8;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    line-height: 1;
+    position: relative;
+}
+
+.treetable  tr:hover td:first-child:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    margin-top: -20px;
+    height: 57px;
+    width: 100%;
+    border-left: 1px solid #47a9e1;
+    border-right: 1px solid #47a9e1;
+    pointer-events: none;
+}
+
+.treetable  tr:hover { background: #d1e9f7; }
+
+.treetable  tr { border-bottom: 2px solid white; color: #5A5A5A; font-size: 11px;}
+
+.treetable  th {
+    font-size: 14px;
+    background: #D7F7D1;
+    text-align: center;
+    color: #505050;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: rgba(255,255,255,.5) 1px 1px, rgba(100,100,100,.3) 3px 7px 3px;
+    user-select: none;
+    padding: 1em 2em;
+    outline: none;
+    border-radius: 3px / 100%;
+    background-image:
+            linear-gradient(45deg, rgba(255,255,255,.0) 30%, rgba(255,255,255,.8), rgba(255,255,255,.0) 70%),
+            linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0) 20%, rgba(255,255,255,0) 90%, rgba(255,255,255,.3)),
+            linear-gradient(to right, rgba(125,125,125,1), rgba(255,255,255,.9) 45%, rgba(125,125,125,.5)),
+            linear-gradient(to right, rgba(125,125,125,1), rgba(255,255,255,.9) 45%, rgba(125,125,125,.5)),
+            linear-gradient(to right, rgba(223,190,170,1), rgba(255,255,255,.9) 45%, rgba(223,190,170,.5)),
+            linear-gradient(to right, rgba(223,190,170,1), rgba(255,255,255,.9) 45%, rgba(223,190,170,.5));
+    background-repeat: no-repeat;
+    background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
+    background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+    box-shadow: rgba(0,0,0,.5) 3px 10px 10px -10px;
+}
+
+.treetable  td {
+    height: 56px;
+    font-weight: bold;
+    text-decoration: none;
+    user-select: none;
+    padding: 1em 2em;
+    outline: none;
+    border-radius: 3px / 100%;
+    background-image:
+            linear-gradient(45deg, rgba(255,255,255,.0) 30%, rgba(255,255,255,.8), rgba(255,255,255,.0) 70%),
+            linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0) 20%, rgba(255,255,255,0) 90%, rgba(255,255,255,.3)),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 45%, rgba(255,255,255,0)),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 45%, rgba(255,255,255,0)),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 45%, rgba(255,255,255,0)),
+            linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0) 45%, rgba(255,255,255,0));
+    background-repeat: no-repeat;
+    background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
+    background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+}
+
+.fancytree-ext-filter-hide tr.fancytree-hide,
+.fancytree-ext-filter-hide span.fancytree-node.fancytree-hide {
+    display: none !important;
+}
+.fancytree-ext-filter .fancytree-node .fancytree-title {
+    color: inherit;
+    font-weight: inherit;
+}
+
+div.fancytree-drag-helper span.fancytree-childcounter,
+div.fancytree-drag-helper span.fancytree-dnd-modifier {
+    display: inline-block;
+    color: #fff;
+    background: #337ab7;
+    border: 1px solid gray;
+    min-width: 10px;
+    height: 10px;
+    line-height: 1;
+    vertical-align: baseline;
+    border-radius: 10px;
+    padding: 2px;
+    text-align: center;
+    font-size: 9px;
+}
+div.fancytree-drag-helper span.fancytree-childcounter {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+}
+
+.fancytree-ext-childcounter span.fancytree-icon,
+.fancytree-ext-filter span.fancytree-icon {
+    position: relative;
+}
+.fancytree-ext-childcounter span.fancytree-childcounter,
+.fancytree-ext-filter span.fancytree-childcounter {
+    color: #fff;
+    background: #777;
+    border: 1px solid gray;
+    position: absolute;
+    top: -9px;
+    right: -6px;
+    min-width: 10px;
+    /* height: 12px; */
+    line-height: 0.5;
+    vertical-align: baseline;
+    border-radius: 10px;
+    padding: 2px;
+    text-align: center;
+    font-size: 9px;
+}
+
+.ui-menu {
+    font-size: 80%;
+}

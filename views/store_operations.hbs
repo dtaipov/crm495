@@ -1,0 +1,70 @@
+{{>main_head}}
+<script type="text/javascript">
+    $(function() {
+
+        $('#documents-table').DataTable( {
+            "ajax": {
+                "url": '/store/store_operations_list',
+                "dataSrc": "data"
+            },
+            "language": {
+                "url": "dataTables.russian.lang"
+            },
+            "order": [[3,'desc']],
+            "columns": [
+                { "data": "id" },
+                { "data": "product_name" },
+                { "data": "quantity" },
+                { "data": "creation" },
+                { "data": "document_id" },
+                { "data": "contractor_name" }
+            ],
+            columnDefs: [ {
+                targets: 3,
+                render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
+            } ]
+        } );
+    });
+
+</script>
+
+<div class="container site-main">
+
+    <!--form class="form-inline">
+        <div class="form-group">
+            <label for="device_name_input">Наименование:</label>
+            <input type="text" id="device_name_input" class="form-control" size="14" name="device_name_input" />
+        </div>
+        <div class="form-group">
+            <label for="device_serial_number_input">Серийный номер:</label>
+            <input type="text" id="device_serial_number_input" class="form-control" size="14" name="device_serial_number_input" />
+        </div>
+        <div class="form-group">
+            <label for="device_part_number_input">Номер партии:</label>
+            <input type="text" id="device_part_number_input" class="form-control" size="14" name="device_part_number_input" />
+        </div>
+    </form-->
+    <br />
+
+    <table id="documents-table" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th>Создание</th>
+            <th>Документ</th>
+            <th>Контрагент</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

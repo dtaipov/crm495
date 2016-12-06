@@ -1,0 +1,41 @@
+{{>main_head}}
+<script type="text/javascript">
+    $(function() {
+
+        $('#documents-table').DataTable( {
+            "ajax": {
+                "url": '/reports/products_balance_list',
+                "dataSrc": "data"
+            },
+            "language": {
+                "url": "/dataTables.russian.lang"
+            },
+            "columns": [
+                { "data": "id"},
+                { "data": "name" },
+                { "data": "sum_quantity" }
+            ]
+        } );
+    });
+
+</script>
+
+<div class="container site-main">
+
+    <table id="documents-table" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>ID товара</th>
+            <th>Название</th>
+            <th>Остаток</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

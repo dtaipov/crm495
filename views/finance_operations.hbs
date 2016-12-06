@@ -1,0 +1,111 @@
+{{>main_head}}
+<script type="text/javascript">
+    $(function() {
+
+        $('#documents-table').DataTable( {
+            "ajax": {
+                "url": '/finances/finance_operations_list',
+                "dataSrc": "data"
+            },
+            "language": {
+                "url": "dataTables.russian.lang"
+            },
+            "order": [[2,'desc']],
+            "columns": [
+                { "data": "id" },
+                { "data": "document_id",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/documents/edit?id=' + data + '">' + data + '</a>'; }
+                },
+                { "data": "creation" },
+                { "data": "product_name" },
+                { "data": "money_amount_sum" },
+                { "data": "contractor_name" }
+            ],
+            columnDefs: [ {
+                targets: 2,
+                render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
+            } ],
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                            typeof i === 'number' ?
+                                    i : 0;
+                };
+
+                // Total over all pages
+                total = api
+                        .column( 4 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                // Total over this page
+                pageTotal = api
+                        .column( 4, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                // Update footer
+                $( api.column( 4 ).footer() ).html(
+                        "Итого: " + pageTotal +' ('+ total +')'
+                );
+            }
+        } );
+    });
+
+</script>
+
+<div class="container site-main">
+
+    <!--form class="form-inline">
+        <div class="form-group">
+            <label for="device_name_input">Наименование:</label>
+            <input type="text" id="device_name_input" class="form-control" size="14" name="device_name_input" />
+        </div>
+        <div class="form-group">
+            <label for="device_serial_number_input">Серийный номер:</label>
+            <input type="text" id="device_serial_number_input" class="form-control" size="14" name="device_serial_number_input" />
+        </div>
+        <div class="form-group">
+            <label for="device_part_number_input">Номер партии:</label>
+            <input type="text" id="device_part_number_input" class="form-control" size="14" name="device_part_number_input" />
+        </div>
+    </form-->
+    <br />
+
+    <table id="documents-table" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Документ</th>
+            <th>Создание</th>
+            <th>Товар</th>
+            <th>Сумма</th>
+            <th>Контрагент</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th colspan="5" style="text-align:right">Total:</th>
+            <th></th>
+        </tr>
+        </tfoot>
+        <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

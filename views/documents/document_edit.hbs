@@ -1,0 +1,161 @@
+{{>main_head}}
+
+<script>
+    $(function() {
+        var storeProductsIndex = 0;
+        var financeProductsIndex = 0;
+        $("select[name=finance_products_ids]").change(function() {
+            var option = $('option:selected', this);
+            var price = option.attr('price');
+            $('#finance_money_amounts'+$(this).attr("finance_product_index")).val(price);
+        });
+
+        $("#store_product_add").on("click", function() {
+            addStoreProductInputs();
+        });
+
+        $("#finance_product_add").on("click", function() {
+            addFinanceOperationInputs();
+        });
+
+        /*$("[name^=store_product_remove_btn]").unbind().click(function () {
+            console.log("click");
+        })*/
+
+        function addStoreProductInputs() {
+            let index = ++storeProductsIndex;//$("select[name=store_products_ids]").length;
+            console.log(index);
+            let html =
+                    '<div class="row" id="store_product_inputs_container'+index+'">' +
+                    '<div class="form-group col-sm-3">' +
+                    '<label for="store_products_ids'+index+'">Товар</label>' +
+                    '<select class="form-control" id="store_products_ids'+index+'" name="store_products_ids">' +
+                    '<option value=""></option>' +
+                        {{#each store_products_list}}
+                        '<option value="{{this.id}}">{{this.name}}</option>' +
+                        {{/each}}
+                    '</select>' +
+                    '</div>' +
+                    '<div class="form-group col-sm-3">' +
+                    '<label for="store_quantities'+index+'">Количество</label>' +
+                    '<input type="number" class="form-control" id="store_quantities'+index+'" name="store_quantities" value="1">' +
+                    '</div>' +
+                    //'<div class="form-group col-sm-1">' +
+                    //'<label for="store_product_remove_btn'+index+'">Удалить</label>' +
+                    //'<button type="button" class="btn btn-default btn-sm" name="store_product_remove_btn'+index+'" id="store_product_remove_btn'+index+'">' +
+                    //    '<span class="glyphicon glyphicon-remove"></span>' +
+                    //'</button>' +
+                    //'</div>' +
+                    '</div>';
+
+            $("#store_operations_panel").append($(html));
+        }
+
+        function addFinanceOperationInputs() {
+            let index = ++financeProductsIndex;
+            let html =
+                    '<div class="row">' +
+                    '<div class="form-group col-sm-3">' +
+                    '<label for="finance_products_list'+index+'">Товар</label>' +
+                    '<select class="form-control" id="finance_products_ids'+index+'" name="finance_products_ids" finance_product_index="'+index+'">' +
+                    '<option value="" price=""></option>' +
+                        {{#each finance_products_list}}
+                        '<option value="{{this.id}}" price="{{this.price}}">{{this.name}}</option>' +
+                        {{/each}}
+                    '</select>' +
+                    '</div>' +
+                    '<div class="form-group col-sm-3">' +
+                    '<label for="finance_products_quantities'+index+'">Количество</label>' +
+                    '<input type="number" class="form-control" name="finance_products_quantities" id="finance_products_quantities'+index+'" value="1">' +
+                    '</div>' +
+                    '<div class="form-group col-sm-3">' +
+                    '<label for="finance_money_amounts'+index+'">Цена</label>' +
+                    '<input type="number" class="form-control" name="finance_money_amounts" id="finance_money_amounts'+index+'" value="1">' +
+                    '</div>' +
+                    '<div class="form-group col-sm-3">' +
+                    '<label for="finance_payment_method_ids'+index+'">Тип платежа</label>' +
+                    '<select class="form-control" id="finance_payment_method_ids'+index+'" name="finance_payment_method_ids">' +
+                        {{#each payment_methods_list}}
+                        '<option value="{{this.id}}">{{this.name}}</option>' +
+                        {{/each}}
+                    '</select>' +
+                    '</div>' +
+                    '</div>';
+
+            $("#finance_operations_panel").append($(html));
+        }
+
+        addStoreProductInputs();
+        addFinanceOperationInputs();
+    });
+</script>
+
+<div class="container site-main">
+    <form action="/documents/edit" method="post">
+        <input type="hidden" name="id" value="{{document.id}}">
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="contractor_id">Контрагент</label>
+                <select class="form-control" id="contractor_id" name="contractor_id" size="{{contractors_list.length}}">
+                    {{#each contractors_list}}
+                        <option value="{{this.id}}" {{#ifCond this.id ../document.contractor_id}}selected{{/ifCond}}>{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="payment_method_id">Тип платежа</label>
+                {{#each payment_methods_list}}
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="payment_method_id" value="{{this.id}}" {{#ifCond this.id ../document.payment_method_id}}checked{{/ifCond}}>
+                            {{this.name}}
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="document_type_id">Тип документа</label>
+                {{#each document_types_list}}
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="document_type_id" value="{{this.id}}" {{#ifCond this.id ../document.document_type_id}}checked{{/ifCond}}>
+                            {{this.name}}
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Операции на складе</div>
+            <div class="panel-body" id="store_operations_panel">
+            </div>
+            <div class="row col-sm-1">
+                <button type="button" class="btn btn-default btn-sm" id="store_product_add">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">Финансовые операции</div>
+            <div class="panel-body" id="finance_operations_panel">
+            </div>
+            <div class="row col-sm-1">
+                <button type="button" class="btn btn-default btn-sm" id="finance_product_add">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

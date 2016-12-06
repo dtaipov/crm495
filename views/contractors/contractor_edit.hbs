@@ -1,0 +1,32 @@
+{{>main_head}}
+
+<div class="container site-main">
+    <form action="/contractors/edit" method="post">
+        <input type="hidden" name="id" value="{{contractor.id}}">
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label for="contractor_name">Имя</label>
+                <input type="text" name="contractor_name" id="contractor_name" value="{{contractor.name}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="group_id">Группа</label>
+                {{#each contractor_group_list}}
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="contractor_group_id" value="{{this.id}}" {{#ifCond this.id ../contractor.contractor_group_id}}checked{{/ifCond}}>
+                            {{this.name}}
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

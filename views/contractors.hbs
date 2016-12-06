@@ -1,0 +1,57 @@
+{{>main_head}}
+<script type="text/javascript">
+    $(function() {
+
+        $('#contractors-table').DataTable( {
+            "ajax": {
+                "url": '/contractors/list',
+                "dataSrc": "data"
+            },
+            "language": {
+                "url": "dataTables.russian.lang"
+            },
+            "order": [[2,'asc']],
+            "columns": [
+                {"data": "id",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/contractors/edit?id=' + data + '">' + data + '</a>'; }
+                },
+                { "data": "name" },
+                { "data": "contractor_group_name" },
+                { "data": "creation" },
+                { "data": "description" },
+            ],
+            columnDefs: [ {
+                targets: 3,
+                render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
+            } ]
+        } );
+
+    });
+
+</script>
+
+<div class="container site-main">
+    <a href="/contractors/add">Новый контрагент</a>
+
+    <table id="contractors-table" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Группа</th>
+            <th>Создание</th>
+            <th>Описание</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

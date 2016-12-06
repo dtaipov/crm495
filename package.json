@@ -1,26 +1,36 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.2.5",
-  "description": "A sample Node.js app using Express 4",
+  "name": "fur-market",
+  "version": "0.1.0",
+  "description": "Fur market application",
   "engines": {
-    "node": "5.9.1"
+    "node": "6.9.1"
   },
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "dependencies": {
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "ejs": "2.4.1",
-    "express": "4.13.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "express": "4.13.3",
+    "express-brute": "^1.0.1",
+    "express-session": "^1.14.2",
+    "hbs": "^4.0.1",
+    "hbs-utils": "0.0.3",
+    "ini": "^1.3.4",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pg": "^6.1.0",
+    "pg-monitor": "^0.5.11",
+    "pg-promise": "^5.3.5",
+    "winston": "^2.3.0"
   },
   "keywords": [
-    "node",
-    "heroku",
-    "express"
+    "fur",
+    "market",
+    "fur-market"
   ],
   "license": "MIT"
 }

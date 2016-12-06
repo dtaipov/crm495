@@ -1,0 +1,171 @@
+
+
+19:30:00 error: Empty or undefined query.
+
+19:31:00 error: Empty or undefined query.
+
+19:31:47 error: Empty or undefined query.
+
+15:00:16 error: syntax error at or near "$"
+         query: INSERT INTO "public".document(contractor_id, payment_method, document_type) VALUES(${contractor_id}, ${payment_method}, ${document_type}) RETURNING id
+
+15:05:57 error: syntax error at or near "$"
+         query: INSERT INTO "public".document(contractor_id, payment_method, document_type) VALUES(${contractor_id}, ${payment_method}, ${document_type}) RETURNING id
+
+15:06:13 error: syntax error at or near "$"
+         query: INSERT INTO "public".document(contractor_id, payment_method, document_type) VALUES(${contractor_id}, ${payment_method}, ${document_type}) RETURNING id
+
+15:10:38 error: Property 'document_type' doesn't exist.
+         query: INSERT INTO "public".document(contractor_id, payment_method, document_type) VALUES(${contractor_id}, ${payment_method}, ${document_type}) RETURNING id
+         params: {"contractor_id":"1","payment_method":"2","document_type_id":"3"}
+
+15:11:05 error: Property 'document_type' doesn't exist.
+         query: INSERT INTO "public".document(contractor_id, payment_method, document_type) VALUES(${contractor_id}, ${payment_method}, ${document_type}) RETURNING id
+         params: {"contractor_id":"1","payment_method":"2","document_type_id":"3"}
+
+19:01:02 error: column d.document_type does not exist
+         query: select d.id, d.description, d.creation, dt.description document_type_description, c.name contractor_name from document_type dt, document d left join contractor c on d.contractor_id = c.id where d.active = TRUE and d.document_type = dt.id order by d.id desc
+
+19:28:34 error: column dt.name does not exist
+         query: select d.id, d.description, d.creation, dt.name document_type_name, c.name contractor_name from document_type dt, document d left join contractor c on d.contractor_id = c.id where d.active = TRUE and d.document_type_id = dt.id order by d.id desc
+
+19:28:42 error: column dt.name does not exist
+         query: select d.id, d.description, d.creation, dt.name document_type_name, c.name contractor_name from document_type dt, document d left join contractor c on d.contractor_id = c.id where d.active = TRUE and d.document_type_id = dt.id order by d.id desc
+
+19:29:40 error: Empty or undefined query.
+
+19:33:58 error: Empty or undefined query.
+
+09:39:42 error: relation "users" does not exist
+         task: select * from users
+
+11:42:15 error: invalid input syntax for integer: ""
+         query: INSERT INTO "public".document(contractor_id, payment_method_id, document_type_id) VALUES('', '2', '4') RETURNING id
+
+12:04:52 error: column fo.payment_method does not exist
+         query: select fo.id, fo.document_id, fo.creation, fo.money_amount, fo.payment_method, c.name contractor_name from finance_operation fo, contractor c, document d where fo.document_id = d.id and d.contractor_id = c.id order by fo.id;
+
+15:54:48 error: Cannot read property 'list_only_products' of undefined
+
+15:54:48 error: Loose request outside an expired connection.
+         task: select dt.id, dt.name from document_type dt order by dt.id
+
+15:54:48 error: Loose request outside an expired connection.
+         task: select pm.id, pm.name from payment_method pm order by pm.id
+
+15:54:48 error: Loose request outside an expired connection.
+         task: select c.id, c.name from contractor c order by c.name
+
+15:56:44 error: t.contractors.all is not a function
+
+15:56:44 error: Loose request outside an expired connection.
+         task: select dt.id, dt.name from document_type dt order by dt.id
+
+15:56:44 error: Loose request outside an expired connection.
+         task: select pm.id, pm.name from payment_method pm order by pm.id
+
+15:56:45 error: Loose request outside an expired connection.
+         task: select c.id, c.name from contractor c order by c.name
+
+15:56:45 error: Loose request outside an expired connection.
+         task: SELECT * FROM product where service = FALSE
+
+18:48:34 error: there is no parameter $1
+         task: SELECT * FROM document WHERE id = $1
+
+20:10:15 error: q1 is not defined
+
+20:10:40 error: q1 is not defined
+
+17:19:52 error: column "money_amount" of relation "store_operation" does not exist
+         tx: INSERT INTO "public".store_operation(product_id, quantity, document_id, money_amount, payment_method_id) VALUES('22', '1', '23', '250', '2') RETURNING id
+
+17:19:52 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: INSERT INTO "public".store_operation(product_id, quantity, document_id, money_amount, payment_method_id) VALUES('26', '2', '23', '400', '2') RETURNING id
+
+17:23:02 error: column "quantity" of relation "finance_operation" does not exist
+         tx: INSERT INTO "public".finance_operation(product_id, quantity, document_id, money_amount, payment_method_id) VALUES('26', '2', '23', '400', '2') RETURNING id
+
+17:23:02 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: INSERT INTO "public".finance_operation(product_id, quantity, document_id, money_amount, payment_method_id) VALUES('22', '1', '23', '250', '2') RETURNING id
+
+17:25:22 error: No return data was expected.
+         tx: INSERT INTO "public".finance_operation(product_id, quantity, document_id, money_amount, payment_method_id) VALUES('26', '2', '23', '400', '2') RETURNING id
+
+17:25:23 error: No return data was expected.
+         tx: INSERT INTO "public".finance_operation(product_id, quantity, document_id, money_amount, payment_method_id) VALUES('22', '1', '23', '250', '2') RETURNING id
+
+18:02:08 error: Empty or undefined query.
+
+18:03:43 error: Empty or undefined query.
+
+18:06:34 error: Empty or undefined query.
+
+13:23:28 error: column d.document_id does not exist
+         query: select d.id, d.description, d.creation, dt.name document_type_name, c.name contractor_name, x.sum_money_amount from document_type dt, document d left join (select document_id, sum(quantity*money_amount) sum_money_amount from finance_operation fo group by fo.document_id) x on d.document_id = x.document_id left join contractor c on d.contractor_id = c.id where d.active = TRUE and d.document_type_id = dt.id and x.document_id = d.id order by d.id desc
+
+13:26:22 error: column d.document_id does not exist
+         query: select d.id, d.description, d.creation, dt.name document_type_name, c.name contractor_name, x.sum_money_amount from document_type dt, document d left join (select document_id, sum(quantity*money_amount) sum_money_amount from finance_operation fo group by fo.document_id) x on d.document_id = x.document_id left join contractor c on d.contractor_id = c.id where d.active = TRUE and d.document_type_id = dt.id and x.document_id = d.id order by d.id desc
+
+18:23:09 error: invalid input syntax for integer: "undefined"
+         task: SELECT * FROM document WHERE id = 'undefined'
+
+14:10:59 error: relation "cg" does not exist
+         query: select c.id, c.name, cg.name contractor_group_name from contractor c, cg contractor_group where c.group_id = cg.id order by c.name
+
+14:17:05 error: missing FROM-clause entry for table "c"
+         task: select c.id, c.name from contractor_group cg order by c.name
+
+14:21:27 error: missing FROM-clause entry for table "c"
+         task: select c.id, c.name from contractor_group cg order by c.name
+
+14:40:54 error: Property 'name' doesn't exist.
+         query: UPDATE contractor SET name=${name},contractor_group_id=${contractor_group_id} WHERE id=${id};
+         params: {"id":"24","contractor_name":"Васильева Ольга Анатольевна","contractor_group_id":"1"}
+
+14:41:47 error: No data returned from the query.
+         query: UPDATE contractor SET name='Васильева Ольга Анатольевна',contractor_group_id='1' WHERE id='24';
+
+16:36:20 error: Property 'contractor_name' doesn't exist.
+         query: INSERT INTO "public".contractor(name, contractor_group_id) VALUES(${contractor_name}, ${contractor_group_id}) RETURNING id
+         params: {"name":"Назарова Ольга Анатольевна"}
+
+13:59:19 error: Property 'service' doesn't exist.
+         query: INSERT INTO "public".product(name, service, price, product_group_id) VALUES(${product_name}, ${service}, ${price}, ${product_group_id}) RETURNING id
+         params: {"product_name":"Наушники из черной норки с замшевым ободком","product_group_id":"3"}
+
+14:09:39 error: t.products.list_only_products is not a function
+
+14:09:39 error: Loose request outside an expired connection.
+         task: select dt.id, dt.name from document_type dt order by dt.id
+
+14:09:39 error: Loose request outside an expired connection.
+         task: select pm.id, pm.name from payment_method pm order by pm.id
+
+14:09:39 error: Loose request outside an expired connection.
+         task: select c.id, c.name, c.creation, c.description, cg.name contractor_group_name from contractor c, contractor_group cg where c.contractor_group_id = cg.id order by c.name
+
+14:10:20 error: t.products.list_only_products is not a function
+
+14:10:20 error: Loose request outside an expired connection.
+         task: select dt.id, dt.name from document_type dt order by dt.id
+
+14:10:21 error: Loose request outside an expired connection.
+         task: select pm.id, pm.name from payment_method pm order by pm.id
+
+14:10:21 error: Loose request outside an expired connection.
+         task: select c.id, c.name, c.creation, c.description, cg.name contractor_group_name from contractor c, contractor_group cg where c.contractor_group_id = cg.id order by c.name
+
+14:13:40 error: t.products.list_only_products is not a function
+
+14:13:41 error: Loose request outside an expired connection.
+         task: select dt.id, dt.name from document_type dt order by dt.id
+
+14:13:41 error: Loose request outside an expired connection.
+         task: select pm.id, pm.name from payment_method pm order by pm.id
+
+14:16:09 error: insert or update on table "document" violates foreign key constraint "document_contractor_id_fkey"
+         query: INSERT INTO "public".document(contractor_id, payment_method_id, document_type_id) VALUES('32', '2', '4') RETURNING id
+
+20:03:19 error: invalid input syntax for integer: ""
+         query: UPDATE product SET name='Песец финский черный 0',service='FALSE',price='',product_group_id='1' WHERE id='4';

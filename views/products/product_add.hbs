@@ -1,0 +1,47 @@
+{{>main_head}}
+
+<div class="container site-main">
+    <form action="/products/add" method="post">
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="product_name">Название</label>
+                <input type="text" name="product_name" id="product_name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label>
+                    <input type="radio" value="FALSE" name="service" checked>Продукт
+                </label>
+                <label>
+                    <input type="radio" value="TRUE" name="service">Услуга
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="price">Цена</label>
+                <input type="number" name="price" id="price">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="product_group_id">Группа</label>
+                {{#each product_group_list}}
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="product_group_id" value="{{this.id}}" checked>
+                            {{this.name}}
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

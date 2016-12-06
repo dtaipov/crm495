@@ -1,0 +1,53 @@
+{{>main_head}}
+<script type="text/javascript">
+    $(function() {
+
+        $('#data-table').DataTable( {
+            "ajax": {
+                "url": '/products/list',
+                "dataSrc": "data"
+            },
+            "language": {
+                "url": "dataTables.russian.lang"
+            },
+            "order": [[2,'asc']],
+            "columns": [
+                {"data": "id",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/products/edit?id=' + data + '">' + data + '</a>'; }
+                },
+                { "data": "name" },
+                { "data": "product_group_name" },
+                { "data": "service" },
+                { "data": "price" },
+            ]
+        } );
+
+    });
+
+</script>
+
+<div class="container site-main">
+    <a href="/products/add">Новый товар</a>
+
+    <table id="data-table" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Группа</th>
+            <th>Тип</th>
+            <th>Цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
