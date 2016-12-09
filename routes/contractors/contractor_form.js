@@ -76,8 +76,8 @@ module.exports = {
                 id: req.body.id,
                 contractor_name: req.body.contractor_name,
                 contractor_group_id: req.body.contractor_group_id,
-                contact_phone: req.body.contact_phone,
-                contact_address: req.body.contact_address
+                contact_phone: Sanitize.sanitizeQuotes(req.body.contact_phone),
+                contact_address: Sanitize.sanitizeQuotes(req.body.contact_address)
             }
         )
         .then(function (data) {
