@@ -10,6 +10,7 @@
             "language": {
                 "url": "dataTables.russian.lang"
             },
+            "stateSave": true,
             "order": [[1, "desc"]],
             "columns": [
                 {"data": "id",
@@ -20,8 +21,15 @@
                 { "data": "document_type_name" },
                 { "data": "contractor_name",
                     "render": function (data, type, full, meta) {
-                        if (full.contractor_address) {
-                            return '<span title="' + full.contractor_address + '">' + data + '</span>';
+                        if (full.contractor_address || full.contractor_phone) {
+                            let titleStr = "";
+                            if (full.contractor_address) {
+                              titleStr = full.contractor_address + " ";
+                            }
+                            if (full.contractor_phone) {
+                                titleStr += "Телефон: " + full.contractor_phone
+                            }
+                            return '<span title="' + titleStr + '">' + data + '</span>';
                         } else {
                             return data;
                         }

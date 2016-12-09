@@ -57,10 +57,12 @@ module.exports = (rep, pgp) => {
                 console.log(financeMoneyAmounts);
                 console.log("financePaymentMethodIds");
                 console.log(financePaymentMethodIds);
-                let queries = [this.none('update document set contractor_id=$1, payment_method_id=$2, document_type_id=$3 where id=$4',
+                let queries = [this.none('update document set contractor_id=$1, payment_method_id=$2, document_type_id=$3, creation=$4, agent_id=$5 where id=$6',
                     [values.contractor_id,
                         values.payment_method_id,
                         values.document_type_id,
+                        values.creation,
+                        values.agent_id,
                         documentId]
                 ),
                     this.none('delete from store_operation where document_id=$1', documentId),

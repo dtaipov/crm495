@@ -169,3 +169,15 @@
 
 20:03:19 error: invalid input syntax for integer: ""
          query: UPDATE product SET name='Песец финский черный 0',service='FALSE',price='',product_group_id='1' WHERE id='4';
+
+18:30:16 error: syntax error at or near "$"
+         query: UPDATE contractor SET name=${contractor_name},contractor_group_id=${contractor_group_id} WHERE id=${id};
+
+18:35:31 error: syntax error at or near "$"
+         query: UPDATE contractor SET name=${contractor_name},contractor_group_id=${contractor_group_id} WHERE id=${id};
+
+18:36:25 error: syntax error at or near "$"
+         query: UPDATE contractor SET name=${contractor_name},contractor_group_id=${contractor_group_id} WHERE id=${id};
+
+08:58:45 error: invalid input syntax for integer: ""
+         query: INSERT INTO "public".document(contractor_id, payment_method_id, document_type_id, creation, agent_id) VALUES('22', '1', '2', '2016-12-08T08:58', '') RETURNING id
