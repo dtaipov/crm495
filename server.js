@@ -110,20 +110,9 @@ app.get('/products/edit', isLoggedIn, product_form.edit_index);
 app.post('/products/edit', isLoggedIn, product_form.edit_save);
 GET('/products/list', () => db.products.list());
 
-/*POST('/documents/add', req => db.documents.add(
-    {
-        contractor_id: req.body.contractor_id,
-        payment_method_id: req.body.payment_method_id,
-        document_type_id: req.body.document_type_id,
-    }
-));*/
-//POST('/documents/edit', );
-//app.post('/document_product_remainder_enter', isLoggedIn, document_product_remainder_enter.save);
 app.get('/store_operations', isLoggedIn, store_operations.index);
-//app.get('/get_store_operations', isLoggedIn, store_operations.get_store_operations);
 app.get('/finance_operations', isLoggedIn, finance_operations.index);
 app.get('/reports/products_balance', isLoggedIn, products_balance.index);
-//app.get('/get_finance_operations', isLoggedIn, finance_operations.get_finance_operations);
 
 GET('/reports/products_balance_list', () => db.reports.products_balance_list());
 GET('/finances/finance_operations_list', () => db.finances.finance_operations_list());
@@ -146,24 +135,6 @@ function GET(url, handler) {
         });
   });
 }
-
-/*function POST(url, handler) {
-  app.post(url, (req, res) => {
-    handler(req)
-        .then(data => {
-          res.json({
-            success: true,
-            data
-          });
-        })
-        .catch(error => {
-          res.json({
-            success: false,
-            error: error.message || error
-          });
-        });
-  });
-}*/
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
@@ -207,22 +178,6 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   console.log("DESERIALIZE USER");
   done(null, user);
-  /*UsersModel.getUserById(id, function(err, users) {
-
-   if(err){
-   done(err);
-   }else{
-   if (users.length == 1) {
-   var user = users[0];
-   //console.log("user found by id! " + JSON.stringify(user));
-   done(null, user);
-   } else {
-   done(-1, null);
-   }
-
-   }
-
-   });*/
 });
 
 passport.use('local-signin', new LocalStrategy(
@@ -232,19 +187,15 @@ passport.use('local-signin', new LocalStrategy(
 
       var user = null;
       Users.getUserInfo(username, password, function(err, users) {
-        console.log("GET USER INFO: "+users[0].id);
-        //var err = null;
         if (users[0].id == null) {
           console.log('local-signing err: ' + err);
-          //return done(null, false, req.flash('loginMessage', 'Error while getting user')); // req.flash is the way to set flashdata using connect-flash
-          //return done(err, req, null, 1);
           return done(err);
         }
         if (users.length == 1) {
           user = users[0];
           console.log("user found! " + user.login);
         } else {
-          return done(null, false); // req.flash is the way to set flashdata using connect-flash
+          return done(null, false);
         }
         console.log("USER: " + JSON.stringify(user));
         return done(null, user);

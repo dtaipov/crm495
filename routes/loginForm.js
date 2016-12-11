@@ -4,12 +4,9 @@ function getRedirectPage(user) {
     if (user.userroles.indexOf(1) != -1) {
         return "/documents";
     }
-    /*if (user.userroles.indexOf(3) != -1 || user.userroles.indexOf(2) != -1) {
-        return "/devices";
+    if (user.userroles.indexOf(2) != -1) {
+        return "/documents";
     }
-    if (user.userroles.indexOf(4) != -1 || user.userroles.indexOf(5) != -1) {
-        return "/cards_management";
-    }*/
     return null;
 }
 
