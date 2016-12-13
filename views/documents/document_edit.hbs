@@ -72,14 +72,6 @@
                     '<label for="finance_money_amounts'+index+'">Цена</label>' +
                     '<input type="number" class="form-control" name="finance_money_amounts" id="finance_money_amounts'+index+'" value="1">' +
                     '</div>' +
-                    '<div class="form-group col-sm-3">' +
-                    '<label for="finance_payment_method_ids'+index+'">Тип платежа</label>' +
-                    '<select class="form-control" id="finance_payment_method_ids'+index+'" name="finance_payment_method_ids">' +
-                        {{#each payment_methods_list}}
-                        '<option value="{{this.id}}">{{this.name}}</option>' +
-                        {{/each}}
-                    '</select>' +
-                    '</div>' +
                     '</div>';
 
             $("#finance_operations_panel").append($(html));
@@ -140,7 +132,12 @@
         <div class="row">
             <div class="form-group col-sm-3">
                 <label for="agent_id">Агент</label>
-                <input type="number" name="agent_id" value="{{agent_id}}" id="agent_id">
+                <select class="form-control" id="agent_id" name="agent_id">
+                    <option value=""></option>
+                    {{#each agents_list}}
+                        <option value="{{this.id}}" {{#ifCond this.id ../document.agent_id}}selected{{/ifCond}}>{{this.name}}</option>
+                    {{/each}}
+                </select>
             </div>
         </div>
 

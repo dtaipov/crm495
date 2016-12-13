@@ -15,6 +15,7 @@ module.exports = {
                 t.contractors.list(),
                 t.products.list_only_products(),
                 t.products.all(),
+                t.documents.agents_list(),
             ]);
         })
             .then(function (data) {
@@ -25,6 +26,7 @@ module.exports = {
                     contractors_list: data[2],
                     store_products_list: data[3],
                     finance_products_list: data[4],
+                    agents_list: data[5],
                     creation: moment().format("YYYY-MM-DDTHH:mm")
                 });
             })
@@ -69,6 +71,7 @@ module.exports = {
                 t.contractors.list(),
                 t.products.list_only_products(),
                 t.products.all(),
+                t.documents.agents_list(),
                 t.documents.find(req.query.id),
             ]);
         })
@@ -81,9 +84,10 @@ module.exports = {
                 contractors_list: data[2],
                 store_products_list: data[3],
                 finance_products_list: data[4],
-                document: data[5],
-                creation: moment(data[5].creation).format("YYYY-MM-DDTHH:mm"),
-                agent_id: data[5].agent_id
+                agents_list: data[5],
+                document: data[6],
+                creation: moment(data[6].creation).format("YYYY-MM-DDTHH:mm"),
+                agent_id: data[6].agent_id
             });
         })
         .catch(function (error) {
@@ -109,7 +113,6 @@ module.exports = {
                 finance_products_ids: Sanitize.sanitizeArray(req.body.finance_products_ids),
                 finance_products_quantities: Sanitize.sanitizeArray(req.body.finance_products_quantities),
                 finance_money_amounts: Sanitize.sanitizeArray(req.body.finance_money_amounts),
-                finance_payment_method_ids: Sanitize.sanitizeArray(req.body.finance_payment_method_ids),
             }
         )
         .then(function (data) {

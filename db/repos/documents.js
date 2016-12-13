@@ -44,7 +44,6 @@ module.exports = (rep, pgp) => {
                 var financeProductIds = values.finance_products_ids;
                 var financeProductQuantities = values.finance_products_quantities;
                 var financeMoneyAmounts = values.finance_money_amounts;
-                var financePaymentMethodIds = values.finance_payment_method_ids;
                 console.log("storeProductIds");
                 console.log(storeProductIds);
                 console.log("storeQuantities");
@@ -55,8 +54,6 @@ module.exports = (rep, pgp) => {
                 console.log(financeProductQuantities);
                 console.log("financeMoneyAmounts");
                 console.log(financeMoneyAmounts);
-                console.log("financePaymentMethodIds");
-                console.log(financePaymentMethodIds);
                 let queries = [this.none('update document set contractor_id=$1, payment_method_id=$2, document_type_id=$3, creation=$4, agent_id=$5 where id=$6',
                     [values.contractor_id,
                         values.payment_method_id,
@@ -89,7 +86,6 @@ module.exports = (rep, pgp) => {
                                     quantity: financeProductQuantities[i],
                                     document_id: documentId,
                                     money_amount: financeMoneyAmounts[i],
-                                    payment_method_id: financePaymentMethodIds[i],
                                 }));
                         }
                     }
@@ -117,6 +113,9 @@ module.exports = (rep, pgp) => {
 
         payment_methods_list: () =>
             rep.any(sql.payment_methods_list),
+
+        agents_list: () =>
+            rep.any('select id, name from contractor where is_agent = TRUE order by name'),
 
         // Returns the total number of products;
         total: () =>
