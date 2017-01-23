@@ -35,7 +35,14 @@
                         }
                     }
                 },
-                { "data": "sum_money_amount" },
+                { "data": "sum_money_amount",
+                    "render": function(data, type, full, meta) {
+                        if (data > 0) {
+                            return "+" + data;
+                        }
+                        return data;
+                    }
+                },
                 { "data": "description" },
                 { "data": "agent_name" },
                 { "data": "payment_method_name" }
