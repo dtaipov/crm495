@@ -4,6 +4,31 @@ var sql = require('../sql').documents;
 var storeQql = require('../sql').store;
 var financeQql = require('../sql').finances;
 
+function getAfterQueries(documentId, values, c) {
+    let afterQueries = [
+        c.none('delete from store_operation where document_id=$1', documentId),
+        c.none('delete from finance_operation where document_id=$1', documentId)
+    ];
+
+    let financeProductIds = values.finance_products_ids;
+    let financeProductQuantities = values.finance_products_quantities;
+    let financeMoneyAmounts = values.finance_money_amounts;
+
+    if (financeProductIds && financeProductQuantities && financeProductIds.length == financeProductQuantities.length) {
+        for (let i = 0; i < financeProductIds.length; i++) {
+            if (financeProductIds[i]) {
+                afterQueries.push(c.none(financeQql.add,
+                    {
+                        product_id: financeProductIds[i],
+                        quantity: financeProductQuantities[i],
+                        document_id: documentId,
+                        money_amount: financeMoneyAmounts[i],
+                    }));
+            }
+        }
+    }
+    return c;
+}
 module.exports = (rep, pgp) => {
 
     /*
@@ -33,69 +58,44 @@ module.exports = (rep, pgp) => {
             rep.oneOrNone('SELECT * FROM document WHERE id = $1', id),
 
         add: values =>
-            rep.one(sql.add_product_remainder, values, user => user.id),
+            rep.one(sql.add, values, user => user.id),
 
         edit: values =>
             rep.tx(function (t) {
                 var documentId = values.document_id;
                 console.log("documentId:" + documentId);
-                var storeProductIds = values.store_products_ids;
-                var storeQuantities = values.store_quantities;
-                var financeProductIds = values.finance_products_ids;
-                var financeProductQuantities = values.finance_products_quantities;
-                var financeMoneyAmounts = values.finance_money_amounts;
-                console.log("storeProductIds");
-                console.log(storeProductIds);
-                console.log("storeQuantities");
-                console.log(storeQuantities);
-                console.log("financeProductIds");
-                console.log(financeProductIds);
-                console.log("financeProductQuantities");
-                console.log(financeProductQuantities);
-                console.log("financeMoneyAmounts");
-                console.log(financeMoneyAmounts);
-                let queries = [this.none('update document set contractor_id=$1, payment_method_id=$2, document_type_id=$3, creation=$4, agent_id=$5 where id=$6',
+                let queries = [];
+                if (!documentId) {
+                    t.one('INSERT INTO document(contractor_id, payment_method_id, document_type_id, creation, agent_id)' +
+                        ' VALUES($1, $2, $3, $4, $5) RETURNING id',
                     [values.contractor_id,
                         values.payment_method_id,
                         values.document_type_id,
                         values.creation,
+                            values.agent_id])
+                        .then(document => {
+                            return t.batch(
+                                getAfterQueries(document.id, values, this)
+                            );
+                        });
+                } else {
+                    let queries = [this.none('update document set contractor_id=$1, payment_method_id=$2, document_type_id=$3, creation=$4, agent_id=$5 where id=$6',
+                        [values.contractor_id,
+                            values.payment_method_id,
+                            values.document_type_id,
+                            values.creation,
                         values.agent_id,
                         documentId]
-                ),
-                    this.none('delete from store_operation where document_id=$1', documentId),
-                    this.none('delete from finance_operation where document_id=$1', documentId)
+                    )
                 ];
-                if (storeProductIds && storeQuantities && storeProductIds.length == storeQuantities.length) {
-                    for (let i = 0; i < storeProductIds.length; i++) {
-                        if (storeProductIds[i]) {
-                            queries.push(this.none(storeQql.add,
-                                {
-                                    product_id: storeProductIds[i],
-                                    quantity: storeQuantities[i],
-                                    document_id: documentId
-                                }));
-                        }
-                    }
-                }
-                if (financeProductIds && financeProductQuantities && financeProductIds.length == financeProductQuantities.length) {
-                    for (let i = 0; i < financeProductIds.length; i++) {
-                        if (financeProductIds[i]) {
-                            queries.push(this.none(financeQql.add,
-                                {
-                                    product_id: financeProductIds[i],
-                                    quantity: financeProductQuantities[i],
-                                    document_id: documentId,
-                                    money_amount: financeMoneyAmounts[i],
-                                }));
-                        }
-                    }
-                }
-                return this.batch(queries);
+                    return this.batch(queries.concat(getAfterQueries(documentId, values, this)));
+    }
+                //return this.batch(queries);
             })
-            .then(function (data) {
+            .then(data => {
                 console.log(data);
             })
-            .catch(function (error) {
+            .catch(error => {
                 console.log(error); // printing the error;
             }),
 

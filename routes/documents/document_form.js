@@ -7,12 +7,12 @@ var Sanitize = require('../../utils/Sanitize');
 
 module.exports = {
 
-    add_index: function (req, res, next) {
+    /*add_index: function (req, res, next) {
         db.task(t=> {
             return t.batch([
                 t.documents.document_types_list(),
                 t.documents.payment_methods_list(),
-                t.contractors.list(),
+                //t.contractors.list(),
                 t.products.list_only_products(),
                 t.products.all(),
                 t.documents.agents_list(),
@@ -23,10 +23,10 @@ module.exports = {
                     user: req.user,
                     document_types_list: data[0],
                     payment_methods_list: data[1],
-                    contractors_list: data[2],
-                    store_products_list: data[3],
-                    finance_products_list: data[4],
-                    agents_list: data[5],
+                    //contractors_list: data[2],
+                    store_products_list: data[2],
+                    finance_products_list: data[34],
+                    agents_list: data[4],
                     creation: moment().format("YYYY-MM-DDTHH:mm")
                 });
             })
@@ -61,7 +61,7 @@ module.exports = {
                 error: error.message || error
             });
         });
-    },
+    },*/
 
     edit_index: function(req, res, next) {
         db.task(t=> {
@@ -69,10 +69,10 @@ module.exports = {
                 t.documents.document_types_list(),
                 t.documents.payment_methods_list(),
                 t.contractors.list(),
-                t.products.list_only_products(),
+                //t.products.list_only_products(),
                 t.products.all(),
                 t.documents.agents_list(),
-                t.documents.find(req.query.id),
+                req.query.id ? t.documents.find(req.query.id) : null,
             ]);
         })
         .then(function (data) {
@@ -81,13 +81,12 @@ module.exports = {
                 user: req.user,
                 document_types_list: data[0],
                 payment_methods_list: data[1],
-                contractors_list: data[2],
-                store_products_list: data[3],
-                finance_products_list: data[4],
-                agents_list: data[5],
-                document: data[6],
-                creation: moment(data[6].creation).format("YYYY-MM-DDTHH:mm"),
-                agent_id: data[6].agent_id
+                //contractors_list: data[2],
+                store_products_list: data[2],
+                finance_products_list: data[3],
+                agents_list: data[4],
+                document: data[5] ? data[5] : [],
+                creation: data[5] ? moment(data[5].creation).format("YYYY-MM-DDTHH:mm") : null,
             });
         })
         .catch(function (error) {

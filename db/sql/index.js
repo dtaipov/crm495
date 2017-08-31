@@ -61,8 +61,8 @@ module.exports = {
     },
     documents: {
         list: sql('documents/list.sql'),
-        add_product_remainder: sql('documents/add.sql'),
-        add: sql('documents/add.sql'),
+        //add_product_remainder: sql('documents/add.sql'),
+        //add: sql('documents/add.sql'),
         document_types_list: sql('documents/document_types_list.sql'),
         payment_methods_list: sql('documents/payment_methods_list.sql')
     },

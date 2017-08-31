@@ -1,17 +1,78 @@
 {{>main_head}}
 
+<script type="text/javascript">
+    $(function() {
+
+        var table = $('#contractors-table').DataTable( {
+            "ajax": {
+                "url": '/contractors/list',
+                "dataSrc": "data"
+            },
+            "language": {
+                "url": "/dataTables.russian.lang"
+            },
+            "order": [[2,'asc']],
+            "columns": [
+                {"data": "id",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/contractors/edit?id=' + data + '">' + data + '</a>'; }
+                },
+                { "data": "name" },
+                { "data": "contractor_group_name" },
+                { "data": "creation" },
+                { "data": "description" },
+                { "data": "contact_address" },
+                { "data": "contact_phone" }
+            ],
+            columnDefs: [ {
+                targets: 3,
+                render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
+            } ]
+        } );
+
+        $('#contractors-table tbody').on( 'click', 'tr', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+
+                $('#contractor_id').val("");
+            } else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+
+                $('#contractor_id').val(table.row( this ).data().id);
+            }
+        } );
+
+    });
+
+</script>
 <div class="container site-main">
-    <form action="/documents/add" method="post">
-        <div class="row">
-            <div class="form-group col-sm-3">
-                <label for="contractor_id">Контрагент</label>
-                <select class="form-control" id="contractor_id" name="contractor_id" size="{{contractors_list.length}}">
-                    {{#each contractors_list}}
-                        <option value="{{this.id}}">{{this.name}}</option>
-                    {{/each}}
-                </select>
-            </div>
-        </div>
+    <form action="/documents/edit" method="post">
+        <input type="hidden" name="contractor_id" id="contractor_id" />
+        <table id="contractors-table" class="display" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Группа</th>
+                <th>Создание</th>
+                <th>Описание</th>
+                <th>Адрес</th>
+                <th>Телефон</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
         <div class="row">
             <div class="form-group col-sm-3">
                 <label for="payment_method_id">Тип платежа</label>
