@@ -140,22 +140,30 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-hbs.registerHelper('menuItemWithSubmenu', function(name, options) {
-  var innerHTML = options.fn(this); // если нет доступных пользователю подменю, то главный пункт меню тоже не отображаем
-  if (innerHTML.indexOf("li") != -1) {
-    return new hbs.SafeString('<li class="dropdown">' +
-        '<a href="#" class="dropdown-toggle">' + name + ' <b class="caret"></b></a>' +
-        '<ul class="dropdown-menu topNavMenu">' +
-        innerHTML +
-        '</ul>' +
-        '</li>');
+hbs.registerHelper('menuItem', function(path, name) {
+  if (checkPermissions(path + Permissions.METHOD_GET, this.user.userroles)) {
+    return new hbs.SafeString(
+        '<li class="nav-item"><a class="nav-link" href="' + path + '">' + name + '</a></li>');
   }
 });
 
-hbs.registerHelper('menuItem', function(path, name, userRoles) {
-  if (checkPermissions(path + Permissions.METHOD_GET, userRoles)) {
+hbs.registerHelper('menuItemSubmenu', function (path, name) {
+  if (checkPermissions(path + Permissions.METHOD_GET, this.user.userroles)) {
     return new hbs.SafeString(
-        '<li><a href="' + path + '">' + name + '</a></li>');
+      '<a class="dropdown-item" href="' + path + '">' + name + '</a>');
+  }
+});
+
+hbs.registerHelper('menuItemWithSubmenu', function (name, options) {
+  const innerHTML = options.fn(this); // если нет доступных пользователю подменю, то главный пункт меню тоже не отображаем
+  if (innerHTML.trim().length > 0) {
+    return new hbs.SafeString('<li class="nav-item dropdown">' +
+      '<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink' + name + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' + name + '</a>' +
+      '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink' + name + '">' +
+      innerHTML +
+      '</div>' +
+      '</li>'
+    );
   }
 });
 

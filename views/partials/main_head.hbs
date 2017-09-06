@@ -1,24 +1,23 @@
-<nav class="navbar navbar-inverse navbar-default" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Fur495</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">Fur495</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+
                 {{!--menuItem '/users' 'Пользователи' user.userroles--}}
                 {{menuItem '/documents' 'Документы' user.userroles}}
                 {{!--menuItem '/store_operations' 'Операции на складе' user.userroles--}}
                 {{menuItem '/finance_operations' 'Финансовые операции' user.userroles}}
                 {{menuItem '/reports/products_balance' 'Склад' user.userroles}}
                 {{#menuItemWithSubmenu 'Справочники'}}
-                    {{menuItem '/products' 'Товары/Услуги' user.userroles}}
-                    {{menuItem '/contractors' 'Контрагенты' user.userroles}}
+                    {{menuItemSubmenu '/products' 'Товары/Услуги' user.userroles}}
+                    {{menuItemSubmenu '/contractors' 'Контрагенты' user.userroles}}
                 {{/menuItemWithSubmenu}}
 
             </ul>
@@ -26,7 +25,5 @@
                 <li><p class="navbar-text">{{ user.login }}</p></li>
                 <li><a href="/logout/" class="logout">Выйти</a></li>
             </ul>
-        </div>
-
     </div>
 </nav>
