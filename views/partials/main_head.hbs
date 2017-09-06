@@ -2,14 +2,10 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="/">Fur495</a>
+    <a class="navbar-brand" href="/documents">Fur495</a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-
                 {{!--menuItem '/users' 'Пользователи' user.userroles--}}
                 {{menuItem '/documents' 'Документы' user.userroles}}
                 {{!--menuItem '/store_operations' 'Операции на складе' user.userroles--}}
