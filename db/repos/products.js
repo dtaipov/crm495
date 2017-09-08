@@ -1,22 +1,42 @@
 'use strict';
-
-var sql = require('../sql').products;
+const sql = require('../sql').products;
 
 module.exports = (rep, pgp) => {
 
-    return {
+  return {
+    list: () =>
+      rep.any(sql.list),
 
-        list: () =>
-            rep.any(sql.list),
+    find: id =>
+      rep.oneOrNone('SELECT * FROM product WHERE id = $1', id),
 
-        find: id =>
-            rep.oneOrNone('SELECT * FROM product WHERE id = $1', id),
+    add: values =>
+      rep.one(sql.add, values, user => user.id),
 
-        add: values =>
-            rep.one(sql.add, values, user => user.id),
-
-        edit: values =>
-            rep.none(sql.edit, values, user => user.id),
+    edit: values =>
+      rep.tx(function (t) {
+        const productImage = values.product_image;
+        let queries = [this.none('UPDATE product\n' +
+          'SET name=$1,service=$2,price=$3,product_group_id=$4\n' +
+          'WHERE id=$5;',
+          [values.product_name,
+            values.service,
+            values.price,
+            values.product_group_id,
+            values.id]
+        )
+        ];
+        if (productImage) {
+          queries.push(this.none('insert into image_to_product (product_id, image_url, active) VALUES($1, $2, $3)',
+            [values.id, productImage, true]));
+        }
+        return this.batch(queries);
+      }).then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.log(error); // printing the error;
+        }),
 
         product_group_list: () =>
             rep.any(sql.product_group_list),

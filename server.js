@@ -1,59 +1,59 @@
-var express = require('express');
-var hbs = require('hbs');
-var util = require('util');
+const express = require('express');
+const hbs = require('hbs');
+const util = require('util');
 
-var ExpressBrute = require('express-brute');
-var brutStore = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
-var BrutForceUtils = require('./utils/brutForceUtils');
+const ExpressBrute = require('express-brute');
+const brutStore = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
+const BrutForceUtils = require('./utils/brutForceUtils');
 
 
-var failCallback = function (req, res, next, nextValidRequestDate) {
-  var nextValidDateFormatted = moment(nextValidRequestDate).format('D.MM.YYYY HH:mm:ss');
+const failCallback = function (req, res, next, nextValidRequestDate) {
+  const nextValidDateFormatted = moment(nextValidRequestDate).format('D.MM.YYYY HH:mm:ss');
   res.render('login', {message: "Превышено максимальное количество попыток входа. Следующий вход можно совершить не раньше: " + nextValidDateFormatted});
   BrutForceUtils.loginBrutForce(req, nextValidRequestDate);
 };
-var bruteforce = new ExpressBrute(brutStore, {
+const bruteforce = new ExpressBrute(brutStore, {
   freeRetries: 3,
   minWait: 5*60*1000, // 5 minutes
   maxWait: 60*60*1000, // 1 hour,
   failCallback: failCallback
 });
 
-var winston = require('winston');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var db = require('./db').db;
-var store = new session.MemoryStore();
+const winston = require('winston');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const db = require('./db').db;
+const store = new session.MemoryStore();
 
-var passport = require('passport');
-//var i18n = require('i18n');
-var LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
+//const i18n = require('i18n');
+const LocalStrategy = require('passport-local').Strategy;
 
-var loginForm = require('./routes/loginForm')(passport);
-var home = require('./routes/home');
-var documents = require('./routes/documents');
-var contractors = require('./routes/contractors');
-var products = require('./routes/products');
-var document_form = require('./routes/documents/document_form');
-var contractor_form = require('./routes/contractors/contractor_form');
-var product_form = require('./routes/products/product_form');
-var store_operations = require('./routes/store_operations');
-var finance_operations = require('./routes/finance_operations');
-var products_balance = require('./routes/reports/products_balance');
-var Permissions = require('./utils/Permissions');
+const loginForm = require('./routes/loginForm')(passport);
+const home = require('./routes/home');
+const documents = require('./routes/documents');
+const contractors = require('./routes/contractors');
+const products = require('./routes/products');
+const document_form = require('./routes/documents/document_form');
+const contractor_form = require('./routes/contractors/contractor_form');
+const product_form = require('./routes/products/product_form');
+const store_operations = require('./routes/store_operations');
+const finance_operations = require('./routes/finance_operations');
+const products_balance = require('./routes/reports/products_balance');
+const Permissions = require('./utils/Permissions');
 
-var Users = require('./models/Users');
+const Users = require('./models/Users');
 
-var app = express();
+const app = express();
 
-var cookieParserWithSecrets = cookieParser('novanova');
+const cookieParserWithSecrets = cookieParser('novanova');
 app.use(cookieParserWithSecrets);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-var config = require('./config/config');
+const config = require('./config/config');
 
-var port = config.user_interface.port;
+const port = config.user_interface.port;
 const SESSION_ID_COOKIE_NAME = "session" + port;
 
 app.use(session({store :store, name: SESSION_ID_COOKIE_NAME, secret: 'novanova', saveUninitialized: true, resave:true}));
@@ -71,7 +71,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'hbs');
 
 if (app.get('env') === 'development') {
-  var hbsutils = require('hbs-utils')(hbs);
+  const hbsutils = require('hbs-utils')(hbs);
   hbsutils.registerWatchedPartials(__dirname + '/views/partials');
 
   app.use(function(err, req, res, next) {
@@ -178,22 +178,18 @@ hbs.registerHelper('ifCond', function(v1, v2, options) {
 });
 
 passport.serializeUser(function(user, done) {
-  console.log("SERIALIZE USER");
   done(null, user);
 });
 
 
 passport.deserializeUser(function(user, done) {
-  console.log("DESERIALIZE USER");
   done(null, user);
 });
 
 passport.use('local-signin', new LocalStrategy(
     {passReqToCallback : true}, //allows us to pass back the request to the callback
     function(req, username, password, done) {
-      console.log("PASSPORT local-signin");
-
-      var user = null;
+      let user = null;
       Users.getUserInfo(username, password, function(err, users) {
         if (users[0].id == null) {
           console.log('local-signing err: ' + err);
@@ -201,11 +197,9 @@ passport.use('local-signin', new LocalStrategy(
         }
         if (users.length == 1) {
           user = users[0];
-          console.log("user found! " + user.login);
         } else {
           return done(null, false);
         }
-        console.log("USER: " + JSON.stringify(user));
         return done(null, user);
       });
     }
@@ -230,7 +224,7 @@ function isAuthorized(req) {
 }
 
 function checkPermissions(resource, userRoles) {
-  var roles = Permissions.RESOURCES[resource];
+  const roles = Permissions.RESOURCES[resource];
   if (!roles) {
     return false;
   }
