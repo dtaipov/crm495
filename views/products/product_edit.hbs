@@ -25,6 +25,11 @@
             <label for="price">Цена</label>
             <input class="form-control col-md-2" type="number" name="price" id="price" value="{{product.price}}">
         </div>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="TRUE" name="show_to_public" {{#ifCond true product.show_to_public}}checked{{/ifCond}}>Показывать на публичном сайте
+            </label>
+        </div>
         <div class="form-group">
             <label for="group_id">Группа</label>
             {{#each product_group_list}}

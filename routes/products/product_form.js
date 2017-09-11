@@ -33,6 +33,7 @@ module.exports = {
         product_name: req.body.product_name,
         service: req.body.service,
         price: req.body.price,
+        show_to_public: req.body.show_to_public ? "TRUE" : "FALSE",
         product_group_id: req.body.product_group_id
       }
     )
@@ -80,6 +81,7 @@ module.exports = {
         product_image: req.body.product_image,
         service: req.body.service,
         price: req.body.price,
+        show_to_public: req.body.show_to_public ? "TRUE" : "FALSE",
         product_group_id: req.body.product_group_id
       }
     )
