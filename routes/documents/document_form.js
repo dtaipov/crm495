@@ -72,6 +72,7 @@ module.exports = {
                 t.products.all(),
                 t.documents.agents_list(),
                 req.query.id ? t.documents.find(req.query.id) : null,
+                req.query.id ? t.finances.finance_operation_by_document_id(req.query.id) : null
             ]);
         })
         .then(function (data) {
@@ -81,11 +82,11 @@ module.exports = {
                 document_types_list: data[0],
                 payment_methods_list: data[1],
                 //contractors_list: data[2],
-                //store_products_list: data[2],
                 finance_products_list: data[2],
                 agents_list: data[3],
                 document: data[4] ? data[4] : [],
                 creation: data[4] ? moment(data[4].creation).format("YYYY-MM-DDTHH:mm") : null,
+                document_finance_operations: data[5]
             });
         })
         .catch(function (error) {
