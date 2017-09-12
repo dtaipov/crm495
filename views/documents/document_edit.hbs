@@ -137,68 +137,56 @@
             </tbody>
         </table>
 
-        <div class="row">
-            <div class="form-group col-sm-3">
-                <label for="payment_method_id">Тип платежа</label>
-                {{#each payment_methods_list}}
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="payment_method_id" value="{{this.id}}" {{#ifCond this.id ../document.payment_method_id}}checked{{/ifCond}}>
-                            {{this.name}}
-                        </label>
-                    </div>
+        <div class="form-group">
+            <label for="payment_method_id">Тип платежа</label>
+            {{#each payment_methods_list}}
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="payment_method_id" value="{{this.id}}" {{#ifCond this.id ../document.payment_method_id}}checked{{/ifCond}}>
+                        {{this.name}}
+                    </label>
+                </div>
+            {{/each}}
+        </div>
+        <div class="form-group">
+            <label for="document_type_id">Тип документа</label>
+            {{#each document_types_list}}
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="document_type_id" value="{{this.id}}" {{#ifCond this.id ../document.document_type_id}}checked{{/ifCond}}>
+                        {{this.name}}
+                    </label>
+                </div>
+            {{/each}}
+        </div>
+
+        <div class="form-group">
+            <label for="creation">Дата</label>
+            <input class="form-control col-3" type="datetime-local" name="creation" value="{{creation}}" id="creation">
+        </div>
+
+        <div class="form-group">
+            <label for="agent_id">Агент</label>
+            <select class="form-control col-2" id="agent_id" name="agent_id">
+                <option value=""></option>
+                {{#each agents_list}}
+                    <option value="{{this.id}}" {{#ifCond this.id ../document.agent_id}}selected{{/ifCond}}>{{this.name}}</option>
                 {{/each}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-sm-3">
-                <label for="document_type_id">Тип документа</label>
-                {{#each document_types_list}}
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="document_type_id" value="{{this.id}}" {{#ifCond this.id ../document.document_type_id}}checked{{/ifCond}}>
-                            {{this.name}}
-                        </label>
-                    </div>
-                {{/each}}
-            </div>
+            </select>
         </div>
 
-        <div class="row">
-            <div class="form-group col-sm-3">
-                <label for="creation">Дата</label>
-                <input class="form-check-input" type="datetime-local" name="creation" value="{{creation}}" id="creation">
+        <div class="card">
+            <div class="card-header">Финансовые операции</div>
+            <div class="card-block" id="finance_operations_panel">
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-default btn-sm" id="finance_product_add">+</button>
+            </div>
+            <div class="card-footer text-muted">
+                Итого: <span id="totalSum">0</span>
             </div>
         </div>
-
-        <div class="row">
-            <div class="form-group col-sm-3">
-                <label for="agent_id">Агент</label>
-                <select class="form-control" id="agent_id" name="agent_id">
-                    <option value=""></option>
-                    {{#each agents_list}}
-                        <option value="{{this.id}}" {{#ifCond this.id ../document.agent_id}}selected{{/ifCond}}>{{this.name}}</option>
-                    {{/each}}
-                </select>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">Финансовые операции</div>
-            <div class="panel-body" id="finance_operations_panel">
-            </div>
-            <div class="row col-sm-1">
-                <button type="button" class="btn btn-default btn-sm" id="finance_product_add">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </div>
-            <div class="panel-footer">Итого: <span id="totalSum">0</span></div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="form-group col-sm-3">
-                <button type="submit" class="btn btn-primary">Сохранить</button>
-            </div>
-        </div>
+        <br/>
+        <button class="btn btn-primary">Сохранить</button>
     </form>
 </div>
