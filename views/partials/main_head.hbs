@@ -15,11 +15,10 @@
                     {{menuItemSubmenu '/products' 'Товары/Услуги' user.userroles}}
                     {{menuItemSubmenu '/contractors' 'Контрагенты' user.userroles}}
                 {{/menuItemWithSubmenu}}
-
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><p class="navbar-text">{{ user.login }}</p></li>
-                <li><a href="/logout/" class="logout">Выйти</a></li>
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item"><span class="navbar-text">{{ user.login }}</span></li>
+                <li class="nav-item"><a href="/logout/" class="nav-link">Выйти</a></li>
             </ul>
     </div>
 </nav>
