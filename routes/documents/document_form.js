@@ -68,8 +68,7 @@ module.exports = {
             return t.batch([
                 t.documents.document_types_list(),
                 t.documents.payment_methods_list(),
-                t.contractors.list(),
-                //t.products.list_only_products(),
+                //t.contractors.list(),
                 t.products.all(),
                 t.documents.agents_list(),
                 req.query.id ? t.documents.find(req.query.id) : null,
@@ -82,11 +81,11 @@ module.exports = {
                 document_types_list: data[0],
                 payment_methods_list: data[1],
                 //contractors_list: data[2],
-                store_products_list: data[2],
-                finance_products_list: data[3],
-                agents_list: data[4],
-                document: data[5] ? data[5] : [],
-                creation: data[5] ? moment(data[5].creation).format("YYYY-MM-DDTHH:mm") : null,
+                //store_products_list: data[2],
+                finance_products_list: data[2],
+                agents_list: data[3],
+                document: data[4] ? data[4] : [],
+                creation: data[4] ? moment(data[4].creation).format("YYYY-MM-DDTHH:mm") : null,
             });
         })
         .catch(function (error) {

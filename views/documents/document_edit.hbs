@@ -26,7 +26,21 @@
             columnDefs: [ {
                 targets: 3,
                 render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
-            } ]
+            } ],
+            "initComplete": function(settings, json) {
+                var contractorId = $('#contractor_id').val();
+                table.rows().data().each(function(v, index){
+                  if (v.id == contractorId) {
+                      var currentPage = Math.floor(index / table.page.len());
+                      table.page(currentPage).draw(false);
+                      $('#contractors-table tr').each(function () {
+                          if ($(this)[0].firstChild.innerText === contractorId) {
+                            $(this).addClass("selected");
+                          }
+                      });
+                  }
+                });
+            }
         } );
 
         $('#contractors-table tbody').on( 'click', 'tr', function () {
@@ -41,15 +55,6 @@
                 $('#contractor_id').val(table.row( this ).data().id);
             }
         } );
-
-        var contractorId = $('#contractor_id').val();
-        if (contractorId) {
-            $('#contractors-table tr').each(function () {
-                if ($(this).data().contractor_id == contractorId) {
-                    $(this).addClass("selected");
-                }
-            });
-        }
 
 
         var financeProductsIndex = 0;
