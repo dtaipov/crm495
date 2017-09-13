@@ -1,7 +1,7 @@
 {
-  "name": "fur-market",
+  "name": "crm495",
   "version": "0.1.0",
-  "description": "Fur market application",
+  "description": "CRM written in Node.js",
   "engines": {
     "node": "6.9.1"
   },
@@ -28,9 +28,9 @@
     "winston": "^2.3.0"
   },
   "keywords": [
-    "fur",
-    "market",
-    "fur-market"
+    "crm",
+    "node.js",
+    "accounting"
   ],
   "license": "MIT"
 }
