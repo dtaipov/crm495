@@ -200,14 +200,12 @@ passport.use('local-signin', new LocalStrategy(
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
-    console.log('User is authenticated!' + JSON.stringify(req.user));
     if (!isAuthorized(req)) {
       console.log('User is not authorized: ' + JSON.stringify(req.user) + ", resourse: " + req.path);
       return res.sendStatus(403);
     }
     return next();
   } else {
-    console.log('User is not authenticated, redirecting to login page');
     res.redirect('/login');
   }
 }
@@ -222,6 +220,6 @@ function checkPermissions(resource, userRoles) {
     return false;
   }
   return userRoles.some(function(value) {
-    return roles.indexOf(value) != -1;
+    return roles.indexOf(value) !== -1;
   });
 }
