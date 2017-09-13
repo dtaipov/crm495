@@ -43,18 +43,15 @@ const finance_operations = require('./routes/finance_operations');
 const products_balance = require('./routes/reports/products_balance');
 const Permissions = require('./utils/Permissions');
 
-const Users = require('./models/Users');
-
 const app = express();
 
 const cookieParserWithSecrets = cookieParser('novanova');
 app.use(cookieParserWithSecrets);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const config = require('./config/config');
+const config = require('./config');
 
-const port = config.user_interface.port;
-const SESSION_ID_COOKIE_NAME = "session" + port;
+const SESSION_ID_COOKIE_NAME = "session" + config.port;
 
 app.use(session({store :store, name: SESSION_ID_COOKIE_NAME, secret: 'novanova', saveUninitialized: true, resave:true}));
 app.use(passport.initialize());
@@ -188,19 +185,15 @@ passport.deserializeUser(function(user, done) {
 
 passport.use('local-signin', new LocalStrategy(
     {passReqToCallback : true}, //allows us to pass back the request to the callback
-    function(req, username, password, done) {
-      let user = null;
-      Users.getUserInfo(username, password, function(err, users) {
-        if (users[0].id == null) {
-          console.log('local-signing err: ' + err);
-          return done(err);
+    (req, username, password, done) => {
+      db.users.getUserInfo(username, password).then(user => {
+        if (!user) {
+          return done(new Error("user not found"));
         }
-        if (users.length == 1) {
-          user = users[0];
-        } else {
-          return done(null, false);
-        }
+        user.userroles = [1];
         return done(null, user);
+      }).catch(error => {
+        return done(error);
       });
     }
 ));

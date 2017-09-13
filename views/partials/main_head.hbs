@@ -6,14 +6,12 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-                {{!--menuItem '/users' 'Пользователи' user.userroles--}}
-                {{menuItem '/documents' 'Документы' user.userroles}}
-                {{!--menuItem '/store_operations' 'Операции на складе' user.userroles--}}
-                {{menuItem '/finance_operations' 'Финансовые операции' user.userroles}}
-                {{menuItem '/reports/products_balance' 'Склад' user.userroles}}
+                {{menuItem '/documents' 'Документы'}}
+                {{menuItem '/finance_operations' 'Финансовые операции'}}
+                {{menuItem '/reports/products_balance' 'Склад'}}
                 {{#menuItemWithSubmenu 'Справочники'}}
-                    {{menuItemSubmenu '/products' 'Товары/Услуги' user.userroles}}
-                    {{menuItemSubmenu '/contractors' 'Контрагенты' user.userroles}}
+                    {{menuItemSubmenu '/products' 'Товары/Услуги'}}
+                    {{menuItemSubmenu '/contractors' 'Контрагенты'}}
                 {{/menuItemWithSubmenu}}
             </ul>
             <ul class="nav navbar-nav ml-auto">

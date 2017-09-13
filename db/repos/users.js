@@ -42,8 +42,10 @@ module.exports = (rep, pgp) => {
             rep.result('DELETE FROM Users WHERE id = $1', id, r => r.rowCount),
 
         // Tries to find a user from id;
-        find: id =>
-            rep.oneOrNone('SELECT * FROM Users WHERE id = $1', id),
+        getUserInfo: (login, password) =>
+            rep.oneOrNone('SELECT id, login, description, email FROM user_account WHERE login = $1 and password=$2 and active=TRUE',
+              [login, password]
+            ),
 
         // Returns all user records;
         all: () =>

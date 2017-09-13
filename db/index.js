@@ -3,11 +3,12 @@
 // Bluebird is the best promise library available today,
 // and is the one recommended here:
 var promise = require('bluebird');
+var config = require("../config");
 
 // Loading all the database repositories separately,
 // because event 'extend' is called multiple times:
 var repos = {
-    //users: require('./repos/users'),
+    users: require('./repos/users'),
     products: require('./repos/products'),
     documents: require('./repos/documents'),
     contractors: require('./repos/contractors'),
@@ -28,8 +29,7 @@ var options = {
         //    and transaction being executed, which should be as fast as possible.
         // 2. We pass in `pgp` in case it is needed when implementing the repository;
         //    for example, to access namespaces `.as` or `.helpers`
-        //obj.users = repos.users(obj, pgp);
-        //obj.products = repos.products(obj, pgp);
+        obj.users = repos.users(obj, pgp);
         obj.documents = repos.documents(obj, pgp);
         obj.products = repos.products(obj, pgp);
         obj.contractors = repos.contractors(obj, pgp);
@@ -52,7 +52,7 @@ var options = {
 var pgp = require('pg-promise')(options);
 
 // Create the database instance:
-var url = "postgres://lwaliurowjjlfc:wUcxQ5b3h7z3khHqGcDOikMGx1@ec2-54-243-249-165.compute-1.amazonaws.com:5432/db9b6uacnamm2e?ssl=true";
+var url = config.database_url;
 var db = pgp(url);
 
 // Load and initialize all the diagnostics:

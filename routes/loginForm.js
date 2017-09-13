@@ -1,13 +1,13 @@
-var winston = require('winston');
+const winston = require('winston');
 
 function getRedirectPage(user) {
-    if (user.userroles.indexOf(1) != -1) {
+    //if (user.userroles.indexOf(1) != -1) {
+        //return "/documents";
+    //}
+    //if (user.userroles.indexOf(2) != -1) {
         return "/documents";
-    }
-    if (user.userroles.indexOf(2) != -1) {
-        return "/documents";
-    }
-    return null;
+    //}
+    //return null;
 }
 
 module.exports = function (passport) {
