@@ -1,8 +1,3 @@
-var winston = require('winston');
-var util = require('util');
-//var DocumentsModel = require('../models/Documents');
-var PAGE_NAME = "DOCUMENTS: ";
-
 module.exports = {
 
     /*delete: function (req, res, next) {

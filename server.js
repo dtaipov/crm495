@@ -38,7 +38,7 @@ const products = require('./routes/products');
 const document_form = require('./routes/documents/document_form');
 const contractor_form = require('./routes/contractors/contractor_form');
 const product_form = require('./routes/products/product_form');
-const store_operations = require('./routes/store_operations');
+//const store_operations = require('./routes/store_operations');
 const finance_operations = require('./routes/finance_operations');
 const products_balance = require('./routes/reports/products_balance');
 const Permissions = require('./utils/Permissions');
@@ -87,8 +87,6 @@ app.get('/login', loginForm.load);
 app.post('/login', bruteforce.prevent, loginForm.signin);
 app.get('/logout', loginForm.logout);
 app.get('/documents', isLoggedIn, documents.index);
-//app.get('/documents/add', isLoggedIn, document_form.add_index);
-//app.post('/documents/add', isLoggedIn, document_form.edit_save);
 app.get('/documents/edit', isLoggedIn, document_form.edit_index);
 app.post('/documents/edit', isLoggedIn, document_form.edit_save);
 GET('/documents/list', () => db.documents.list());
@@ -107,13 +105,13 @@ app.get('/products/edit', isLoggedIn, product_form.edit_index);
 app.post('/products/edit', isLoggedIn, product_form.edit_save);
 GET('/products/list', () => db.products.list());
 
-app.get('/store_operations', isLoggedIn, store_operations.index);
+//app.get('/store_operations', isLoggedIn, store_operations.index);
 app.get('/finance_operations', isLoggedIn, finance_operations.index);
 app.get('/reports/products_balance', isLoggedIn, products_balance.index);
 
 GET('/reports/products_balance_list', () => db.reports.products_balance_list());
 GET('/finances/finance_operations_list', () => db.finances.finance_operations_list());
-GET('/store/store_operations_list', () => db.store.store_operations_list());
+//GET('/store/store_operations_list', () => db.store.store_operations_list());
 
 function GET(url, handler) {
   app.get(url, (req, res) => {

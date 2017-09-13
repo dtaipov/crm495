@@ -1,8 +1,6 @@
-var winston = require('winston');
-var util = require('util');
-var PAGE_NAME = "CONTRACTOR: ";
-var db = require('../../db').db;
-var Sanitize = require('../../utils/Sanitize');
+const winston = require('winston');
+const db = require('../../db').db;
+const Sanitize = require('../../utils/Sanitize');
 
 module.exports = {
 

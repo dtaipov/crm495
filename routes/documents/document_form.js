@@ -1,9 +1,7 @@
-var winston = require('winston');
-var util = require('util');
-var moment = require('moment');
-var PAGE_NAME = "DOCUMENT: ";
-var db = require('../../db').db;
-var Sanitize = require('../../utils/Sanitize');
+const winston = require('winston');
+const moment = require('moment');
+const db = require('../../db').db;
+const Sanitize = require('../../utils/Sanitize');
 
 module.exports = {
 

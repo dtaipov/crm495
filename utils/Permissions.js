@@ -1,8 +1,8 @@
 const ADMIN = 1;
 const OPERATOR = 2;
 
-var allRoles = [ADMIN, OPERATOR];
-var adminRoles = [ADMIN];
+const allRoles = [ADMIN, OPERATOR];
+const adminRoles = [ADMIN];
 
 module.exports = {
 
@@ -10,12 +10,8 @@ module.exports = {
 
     RESOURCES: {
         "/documents.GET": allRoles,
-        //"/documents/list.GET": allRoles,
         "/store_operations.GET": adminRoles,
-        //"/get_store_operations.GET": allRoles,
         "/finance_operations.GET": allRoles,
-        //"/documents/add.GET": adminRoles,
-        //"/documents/add.POST": adminRoles,
         "/documents/edit.GET": allRoles,
         "/documents/edit.POST": adminRoles,
         "/contractors.GET": allRoles,

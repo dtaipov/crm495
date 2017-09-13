@@ -1,6 +1,5 @@
 const winston = require('winston');
 const util = require('util');
-const PAGE_NAME = "PRODUCT: ";
 const db = require('../../db').db;
 const Sanitize = require('../../utils/Sanitize');
 
