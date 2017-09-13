@@ -49,9 +49,9 @@ const cookieParserWithSecrets = cookieParser('novanova');
 app.use(cookieParserWithSecrets);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const config = require('./config');
+const port = process.env.PORT || 5000;
 
-const SESSION_ID_COOKIE_NAME = "session" + config.port;
+const SESSION_ID_COOKIE_NAME = "session" + port;
 
 app.use(session({store :store, name: SESSION_ID_COOKIE_NAME, secret: 'novanova', saveUninitialized: true, resave:true}));
 app.use(passport.initialize());
@@ -59,7 +59,7 @@ app.use(passport.session());
 
 hbs.registerPartials(__dirname + '/views/partials');
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', port);
 
 app.use(express.static(__dirname + '/public'));
 

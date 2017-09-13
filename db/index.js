@@ -3,7 +3,6 @@
 // Bluebird is the best promise library available today,
 // and is the one recommended here:
 var promise = require('bluebird');
-var config = require("../config");
 
 // Loading all the database repositories separately,
 // because event 'extend' is called multiple times:
@@ -52,7 +51,7 @@ var options = {
 var pgp = require('pg-promise')(options);
 
 // Create the database instance:
-var url = config.database_url;
+var url = process.env.DATABASE_URL;
 var db = pgp(url);
 
 // Load and initialize all the diagnostics:
