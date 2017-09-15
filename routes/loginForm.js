@@ -1,4 +1,4 @@
-const winston = require('winston');
+const logger = require('winston');
 
 function getRedirectPage(user) {
     //if (user.userroles.indexOf(1) != -1) {
@@ -10,47 +10,38 @@ function getRedirectPage(user) {
     //return null;
 }
 
-module.exports = function (passport) {
-    var module = {};
+module.exports = (passport) => {
+    const module = {};
 
-    module.load = function (req, res, next) {
-        /*if(!req.user) {
-         winston.info(PAGE_NAME + "user not found");
-         res.render('home');
-         return;
-         }*/
-        //winston.info(PAGE_NAME + "createUserForm  req.user.role: " + req.user.role);
-        // нужна защита от просмотра пользователей не администратором
-
+    module.load = (req, res, next) => {
         res.render('login', {
-            //user: req.user
         });
     };
 
-    module.signin = function(req, res, next) {
-        var actionStatus = "SUCCESS";
-        passport.authenticate('local-signin', function(err, user, info) {
+    module.signin = (req, res, next) => {
+        let actionStatus = "SUCCESS";
+        passport.authenticate('local-signin', (err, user, info) => {
             if (err) {
                 return next(err);
             }
             if (!user) {
                 return res.render('login', {message: "Пользователь с указанным именем и паролем не найден"});
             }
-            req.logIn(user, function(err) {
+            req.logIn(user, (err) => {
                 if (err) {
                     actionStatus = "FAIL";
                     return next(err);
                 }
-                req.brute.reset(function () {
-                    var redirectPage = getRedirectPage(user);
+                req.brute.reset( () => {
+                    const redirectPage = getRedirectPage(user);
                     return res.redirect(redirectPage);
                 });
             });
         })(req, res, next);
     };
 
-    module.logout = function(req, res) {
-        winston.log("LOGGIN OUT");
+    module.logout = (req, res) => {
+        logger.log("LOGGIN OUT");
         req.logout();
         res.redirect('/login');
     };

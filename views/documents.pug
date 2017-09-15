@@ -1,0 +1,119 @@
+extends layout.pug
+
+block content
+    include includes/header.pug
+    .container.site-main
+      a(href="/documents/edit") Новый документ
+      br
+      table(id="documents-table", class="display", cellspacing="0", width="100%")
+        thead
+          tr
+            th ID
+            th Создание
+            th Тип документа
+            th Контрагент
+            th Сумма
+            th Описание
+            th Агент
+            th Счет
+        tfoot
+          tr
+            th(colspan="5", style="text-align:right") Total:
+            th
+            th
+            th
+        tbody
+          tr
+            td
+            td
+            td
+            td
+            td
+            td
+            td
+
+    script.
+      $(function() {
+        $('#documents-table').DataTable( {
+          "ajax": {
+            "url": '/documents/list',
+            "dataSrc": "data"
+          },
+          "language": {
+            "url": "dataTables.russian.lang"
+          },
+          "stateSave": true,
+          "order": [[1, "desc"]],
+          "columns": [
+            {"data": "id",
+              "render": function (data, type, full, meta) {
+                return '<a href="/documents/edit?id=' + data + '">' + data + '</a>'; }
+            },
+            { "data": "creation" },
+            { "data": "document_type_name" },
+            { "data": "contractor_name",
+              "render": function (data, type, full, meta) {
+                if (full.contractor_address || full.contractor_phone) {
+                  let titleStr = "";
+                  if (full.contractor_address) {
+                    titleStr = full.contractor_address + " ";
+                  }
+                  if (full.contractor_phone) {
+                    titleStr += "Телефон: " + full.contractor_phone
+                  }
+                  return '<span title="' + titleStr + '">' + data + '</span>';
+                } else {
+                  return data;
+                }
+              }
+            },
+            { "data": "sum_money_amount",
+              "render": function(data, type, full, meta) {
+                if (data > 0) {
+                  return "+" + data;
+                }
+                return data;
+              }
+            },
+            { "data": "description" },
+            { "data": "agent_name" },
+            { "data": "payment_method_name" }
+          ],
+          columnDefs: [ {
+            targets: 1,
+            render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
+          } ],
+          "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+              return typeof i === 'string' ?
+                i.replace(/[\$,]/g, '')*1 :
+                typeof i === 'number' ?
+                  i : 0;
+            };
+
+            // Total over all pages
+            total = api
+              .column( 4 )
+              .data()
+              .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+              }, 0 );
+
+            // Total over this page
+            pageTotal = api
+              .column( 4, { page: 'current'} )
+              .data()
+              .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+              }, 0 );
+
+            // Update footer
+            $( api.column( 4 ).footer() ).html(
+              "Итого: " + pageTotal +' ('+ total +')'
+            );
+          }
+        } );
+      });

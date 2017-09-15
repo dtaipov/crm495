@@ -1,0 +1,18 @@
+extends layout.pug
+
+block content
+  nav(class="navbar")
+    a(class="navbar-brand", href="/") CRM495
+
+  .container
+    label(class="error_message") #{message}
+    br
+    br
+    form(action="/login", method="post")
+      .form-group
+        label(for="username") Логин
+        input(class="form-control col-3", id="username", name="username", placeholder="Введите логин")
+      .form-group
+        label(for="password") Пароль
+        input(type="password", class="form-control col-3", id="password", name="password", placeholder="Введите пароль")
+      button(class="btn btn-primary") Войти

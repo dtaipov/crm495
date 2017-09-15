@@ -1,5 +1,4 @@
 const express = require('express');
-const hbs = require('hbs');
 const util = require('util');
 
 const ExpressBrute = require('express-brute');
@@ -57,7 +56,7 @@ app.use(session({store :store, name: SESSION_ID_COOKIE_NAME, secret: 'novanova',
 app.use(passport.initialize());
 app.use(passport.session());
 
-hbs.registerPartials(__dirname + '/views/partials');
+//hbs.registerPartials(__dirname + '/views/partials');
 
 app.set('port', port);
 
@@ -65,21 +64,7 @@ app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
 app.set('views', __dirname + '/views');
-app.set('view engine', 'hbs');
-
-if (app.get('env') === 'development') {
-  const hbsutils = require('hbs-utils')(hbs);
-  hbsutils.registerWatchedPartials(__dirname + '/views/partials');
-
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-
-}
+app.set('view engine', 'pug');
 
 app.get('/', home.index);
 
@@ -135,7 +120,7 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-hbs.registerHelper('menuItem', function(path, name) {
+/*hbs.registerHelper('menuItem', function(path, name) {
   if (checkPermissions(path + Permissions.METHOD_GET, this.user.userroles)) {
     return new hbs.SafeString(
         '<li class="nav-item"><a class="nav-link" href="' + path + '">' + name + '</a></li>');
@@ -170,7 +155,7 @@ hbs.registerHelper('ifCond', function(v1, v2, options) {
     if(v1 == v2) {
         return options.fn(this);
     }
-});
+});*/
 
 passport.serializeUser(function(user, done) {
   done(null, user);
