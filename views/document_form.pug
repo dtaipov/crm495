@@ -28,18 +28,18 @@ block content
             td
 
       .form-group
-          label(for='payment_method_id') Тип платежа
-          each val in payment_methods_list
-            .form-check
-              label.form-check-label
-                  input.form-check-input(type='radio', id='payment_method_id' name='payment_method_id', value=val.id checked=(document.payment_method_id === val.id))
-                  | #{val.name}
+        label Тип платежа
+        each val in payment_methods_list
+          .form-check
+            label.form-check-label
+                input.form-check-input.mr-1(type='radio', name='payment_method_id', value=val.id checked=(document.payment_method_id === val.id))
+                | #{val.name}
       .form-group
-          label(for='document_type_id') Тип документа
+          label Тип документа
           each val in document_types_list
             .form-check
               label.form-check-label
-                  input.form-check-input(type='radio', id='document_type_id' name='document_type_id', value=val.id checked=(document.document_type_id === val.id))
+                  input.form-check-input.mr-1(type='radio', name='document_type_id', value=val.id checked=(document.document_type_id === val.id))
                   | #{val.name}
       .form-group
           label(for='creation') Дата
