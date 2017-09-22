@@ -75,7 +75,7 @@ module.exports = {
         })
         .then(function (data) {
             console.log(data[2]);
-            res.render('documents/document_edit', {
+            res.render('document_form', {
                 user: req.user,
                 document_types_list: data[0],
                 payment_methods_list: data[1],
@@ -89,7 +89,7 @@ module.exports = {
         })
         .catch(function (error) {
             winston.error(error);
-            res.render('documents/document_edit', {
+            res.render('document_form', {
                 user: req.user
             });
         });

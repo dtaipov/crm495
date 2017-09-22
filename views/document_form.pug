@@ -1,0 +1,188 @@
+extends layout.pug
+
+block content
+  include includes/header.pug
+  .container.site-main
+    form(action="/documents/edit", method="post")
+      input(type="hidden", name="id", value=document.id)
+      input(type="hidden", name="contractor_id", id="contractor_id", value=document.contractor_id)
+
+      table(id="contractors-table", class="display", cellspacing="0", width="100%")
+        thead
+          tr
+            th ID
+            th Имя
+            th Группа
+            th Создание
+            th Описание
+            th Адрес
+            th Телефон
+        tbody
+          tr
+            td
+            td
+            td
+            td
+            td
+            td
+            td
+
+      .form-group
+          label(for='payment_method_id') Тип платежа
+          each val in payment_methods_list
+            .form-check
+              label.form-check-label
+                  input.form-check-input(type='radio', id='payment_method_id' name='payment_method_id', value=val.id checked=(document.payment_method_id === val.id))
+                  | #{val.name}
+      .form-group
+          label(for='document_type_id') Тип документа
+          each val in document_types_list
+            .form-check
+              label.form-check-label
+                  input.form-check-input(type='radio', id='document_type_id' name='document_type_id', value=val.id checked=(document.document_type_id === val.id))
+                  | #{val.name}
+      .form-group
+          label(for='creation') Дата
+          input#creation.form-control.col-3(type='datetime-local', name='creation', value=creation)
+      .form-group
+          label(for='agent_id') Агент
+          select#agent_id.form-control.col-2(name='agent_id')
+              option(value='')
+              each val in agents_list
+                option(value=val.id selected=(document.agent_id === val.id)) #{val.name}
+      .card
+          .card-header Финансовые операции
+          #finance_operations_panel.card-block
+          .col-sm-1
+              button#finance_product_add.btn.btn-default.btn-sm(type='button') +
+          .card-footer.text-muted Итого:
+              span#totalSum 0
+      br
+      button.btn.btn-primary Сохранить
+
+  script.
+    $(function() {
+      var table = $('#contractors-table').DataTable( {
+        "ajax": {
+          "url": '/contractors/list',
+          "dataSrc": "data"
+        },
+        "language": {
+          "url": "/dataTables.russian.lang"
+        },
+        "order": [[2,'asc']],
+        "columns": [
+          {"data": "id",
+            "render": function (data, type, full, meta) {
+              return '<a href="/contractors/edit?id=' + data + '">' + data + '</a>'; }
+          },
+          { "data": "name" },
+          { "data": "contractor_group_name" },
+          { "data": "creation" },
+          { "data": "description" },
+          { "data": "contact_address" },
+          { "data": "contact_phone" }
+        ],
+        columnDefs: [ {
+          targets: 3,
+          render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
+        } ],
+        "initComplete": function(settings, json) {
+          var contractorId = $('#contractor_id').val();
+          table.rows().data().each(function(v, index){
+            if (v.id == contractorId) {
+              var currentPage = Math.floor(index / table.page.len());
+              table.page(currentPage).draw(false);
+              $('#contractors-table tr').each(function () {
+                if ($(this)[0].firstChild.innerText === contractorId) {
+                  $(this).addClass("selected");
+                }
+              });
+            }
+          });
+        }
+      } );
+
+      $('#contractors-table tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+          $(this).removeClass('selected');
+
+          $('#contractor_id').val("");
+        } else {
+          table.$('tr.selected').removeClass('selected');
+          $(this).addClass('selected');
+
+          $('#contractor_id').val(table.row( this ).data().id);
+        }
+      } );
+
+
+      var financeProductsIndex = 0;
+
+      $("#finance_product_add").on("click", function() {
+        addFinanceOperationInputs();
+      });
+
+      function addFinanceOperationInputs(productId, price, quantity) {
+        let index = ++financeProductsIndex;
+
+        var optionsHTML = "";
+        var financeProducts = !{JSON.stringify(finance_products_list)};
+        if (financeProducts) {
+          for (var i = 0; i < financeProducts.length; i++) {
+            var val = financeProducts[i];
+            optionsHTML += '<option value="' + val.id + '" price="' + val.price + '" ' +
+              (productId == val.id ? "selected" : "") + '>' + val.name +
+              '</option>';
+              '</option>';
+          }
+        }
+        let html =
+          '<div class="row">' +
+          '<div class="form-group col-sm-3">' +
+          '<label for="finance_products_list'+index+'">Товар</label>' +
+          '<select class="form-control" id="finance_products_ids'+index+'" name="finance_products_ids" finance_product_index="'+index+'">' +
+          '<option value="" price=""></option>' +
+          optionsHTML +
+          '</select>' +
+          '</div>' +
+          '<div class="form-group col-sm-3">' +
+          '<label for="finance_products_quantities'+index+'">Количество</label>' +
+          '<input type="number" class="form-control" name="finance_products_quantities" id="finance_products_quantities'+index+'" value="' + (price ? price : "1") + '">' +
+          '</div>' +
+          '<div class="form-group col-sm-3">' +
+          '<label for="finance_money_amounts'+index+'">Цена</label>' +
+          '<input type="number" class="form-control" name="finance_money_amounts" id="finance_money_amounts'+index+'" value="' + (quantity ? quantity : "0") + '" finance_product_index="'+index+'">' +
+          '</div>' +
+          '</div>';
+
+          $("#finance_operations_panel").append($(html));
+          $("#finance_products_ids" + index).on("change", function() {
+            var option = $('option:selected', this);
+            var price = option.attr('price');
+            $('#finance_money_amounts'+$(this).attr("finance_product_index")).val(price);
+            countTotal();
+          });
+
+          $("#finance_money_amounts" + index).on("change", countTotal);
+          $("#finance_products_quantities" + index).on("change", countTotal);
+        }
+
+        function countTotal() {
+          var sum = 0;
+          $( "input[name='finance_money_amounts']" ).each(function( index ) {
+            var price = $(this).val();
+            var quantity = $('#finance_products_quantities'+$(this).attr("finance_product_index")).val();
+            sum += quantity*price;
+          });
+          $('#totalSum').html(sum);
+        }
+
+        var documentFinanceOprations = !{JSON.stringify(document_finance_operations)};
+        if (documentFinanceOprations) {
+          for (var i = 0; i < documentFinanceOprations.length; i++) {
+            var val = documentFinanceOprations[i];
+            addFinanceOperationInputs(val.product_id, val.quantity, val.money_amount);
+          }
+        }
+    });
