@@ -1,0 +1,45 @@
+extends layout.pug
+
+block content
+  include includes/header.pug
+  .container.site-main
+    a(href="/products/add") Новый товар
+    table.display(id="data-table", cellspacing="0", width="100%")
+      thead
+        tr
+          th ID
+          th Название
+          th Группа
+          th Тип
+          th Цена
+      tbody
+        tr
+          td
+          td
+          td
+          td
+          td
+
+  script.
+    $(function() {
+      $('#data-table').DataTable( {
+        "ajax": {
+          "url": '/products/list',
+          "dataSrc": "data"
+        },
+        "language": {
+          "url": "dataTables.russian.lang"
+        },
+        "order": [[2,'asc']],
+        "columns": [
+          {"data": "id",
+          "render": function (data, type, full, meta) {
+            return '<a href="/products/edit?id=' + data + '">' + data + '</a>'; }
+          },
+          { "data": "name" },
+          { "data": "product_group_name" },
+          { "data": "service" },
+          { "data": "price" }
+        ]
+      });
+    });
