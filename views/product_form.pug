@@ -1,0 +1,36 @@
+extends layout.pug
+
+block content
+    include includes/header.pug
+    .container.site-main
+        form(action="/products/edit", method="post")
+          input(type="hidden", name="id", value=product.id)
+          .form-group
+            label(for="product_name") Название
+            input.form-control(name="product_name", id="product_name", value=product.name)
+          if product.id
+            .form-group
+              label(for="product_image") Ссылка на изображение
+              input.form-control(name="product_image", id="product_image", value="")
+          .form-check
+            label.form-check-label
+            input.form-check-input(type="radio", value="FALSE", name="service", checked=(product.service===false))
+            | Продукт
+            label.form-check-label
+            input.form-check-input(type="radio", value="TRUE", name="service", checked=(product.service===true))
+            | Услуга
+          .form-group
+            label(for="price") Цена
+            input.form-control.col-md-2(type="number", name="price", id="price", value=product.price)
+          .form-check
+            label.form-check-label
+            input.form-check-input(type="checkbox", value="TRUE", name="show_to_public", checked=product.show_to_public)
+            | Показывать на публичном сайте
+          .form-group
+            label(for="group_id") Группа
+            each val in product_group_list
+              .form-check
+                label.form-check-label
+                input.form-check-input(type="radio", name="product_group_id", value=val.id checked=(val.id===product.product_group_id))
+                | #{val.name}
+          button.btn.btn-primary Сохранить

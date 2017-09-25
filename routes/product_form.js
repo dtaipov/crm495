@@ -5,7 +5,7 @@ const Sanitize = require('../utils/Sanitize');
 
 module.exports = {
 
-  add_index: function (req, res, next) {
+  /*add_index: function (req, res, next) {
     db.task(t=> {
       return t.batch([
         t.products.product_group_list()
@@ -47,32 +47,32 @@ module.exports = {
           error: error.message || error
         });
       });
-  },
+  },*/
 
-  edit_index: function(req, res, next) {
+  edit_index: (req, res, next) => {
     db.task(t=> {
       return t.batch([
         t.products.product_group_list(),
-        t.products.find(req.query.id)
+        req.query.id ? t.products.find(req.query.id) : null
       ]);
     })
-      .then(function (data) {
+      .then((data) => {
         console.log(data[1]);
-        res.render('products/product_edit', {
+        res.render('product_form', {
           user: req.user,
           product_group_list: data[0],
-          product: data[1]
+          product: data[1] ? data[1] : {}
         });
       })
       .catch(function (error) {
         winston.error(error);
-        res.render('products/product_edit', {
+        res.render('product_form', {
           user: req.user
         });
       });
   },
 
-  edit_save: function(req, res, next) {
+  edit_save: (req, res, next) => {
     db.products.edit(
       {
         id: req.body.id,
@@ -84,7 +84,7 @@ module.exports = {
         product_group_id: req.body.product_group_id
       }
     )
-      .then(function (data) {
+      .then((data) => {
         console.log("success data: ");
         console.log(data);
         res.redirect("/products");

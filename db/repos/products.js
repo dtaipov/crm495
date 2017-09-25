@@ -10,27 +10,31 @@ module.exports = (rep, pgp) => {
     find: id =>
       rep.oneOrNone('SELECT * FROM product WHERE id = $1', id),
 
-    add: values =>
-      rep.one(sql.add, values, user => user.id),
+    //add: values =>
+      //rep.one(sql.add, values, user => user.id),
 
     edit: values =>
       rep.tx(function (t) {
-        const productImage = values.product_image;
-        let queries = [this.none('UPDATE product\n' +
-          'SET name=$1,service=$2,price=$3,product_group_id=$4\n' +
-          'WHERE id=$5;',
-          [values.product_name,
-            values.service,
-            values.price,
-            values.product_group_id,
-            values.id]
-        )
-        ];
-        if (productImage) {
-          queries.push(this.none('insert into image_to_product (product_id, image_url, active) VALUES($1, $2, $3)',
-            [values.id, productImage, true]));
+        if (values.id) {
+          const productImage = values.product_image;
+          let queries = [this.none('UPDATE product\n' +
+            'SET name=$1,service=$2,price=$3,product_group_id=$4\n' +
+            'WHERE id=$5;',
+            [values.product_name,
+              values.service,
+              values.price,
+              values.product_group_id,
+              values.id]
+          )
+          ];
+          if (productImage) {
+            queries.push(this.none('insert into image_to_product (product_id, image_url, active) VALUES($1, $2, $3)',
+              [values.id, productImage, true]));
+          }
+          return this.batch(queries);
+        } else {
+          return rep.one(sql.add, values, user => user.id);
         }
-        return this.batch(queries);
       }).then(data => {
           console.log(data);
         })
