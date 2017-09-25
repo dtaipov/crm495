@@ -2,3 +2,12 @@ mixin menuItem(path, name)
   li(class="nav-item")
     a(class="nav-link", href=path) #{name}
       block
+
+mixin menuItemWithSubmenu(name)
+  li(class="nav-item dropdown")
+    a(href="#", class="nav-link dropdown-toggle", id="navbarDropdownMenuLink" + name, data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") #{name}
+    div(class="dropdown-menu", aria-labelledby="navbarDropdownMenuLink" + name)
+      block
+
+mixin menuItemSubmenu(path, name)
+  a(class="dropdown-item" href=path) #{name}
