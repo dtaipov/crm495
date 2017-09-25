@@ -1,7 +1,7 @@
 const winston = require('winston');
 const moment = require('moment');
-const db = require('../../db').db;
-const Sanitize = require('../../utils/Sanitize');
+const db = require('../db/index').db;
+const Sanitize = require('../utils/Sanitize');
 
 module.exports = {
 

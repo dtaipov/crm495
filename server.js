@@ -34,12 +34,12 @@ const home = require('./routes/home');
 const documents = require('./routes/documents');
 const contractors = require('./routes/contractors');
 const products = require('./routes/products');
-const document_form = require('./routes/documents/document_form');
-const contractor_form = require('./routes/contractors/contractor_form');
-const product_form = require('./routes/products/product_form');
+const document_form = require('./routes/document_form');
+const contractor_form = require('./routes/contractor_form');
+const product_form = require('./routes/product_form');
 //const store_operations = require('./routes/store_operations');
 const finance_operations = require('./routes/finance_operations');
-const products_balance = require('./routes/reports/products_balance');
+//const products_balance = require('./routes/reports/products_balance');
 const Permissions = require('./utils/Permissions');
 
 const app = express();
@@ -78,8 +78,8 @@ app.post('/documents/edit', isLoggedIn, document_form.edit_save);
 GET('/documents/list', () => db.documents.list());
 
 app.get('/contractors', isLoggedIn, contractors.index);
-app.get('/contractors/add', isLoggedIn, contractor_form.add_index);
-app.post('/contractors/add', isLoggedIn, contractor_form.add_save); // заменить на edit_save
+//app.get('/contractors/add', isLoggedIn, contractor_form.add_index);
+//app.post('/contractors/add', isLoggedIn, contractor_form.add_save); // заменить на edit_save
 app.get('/contractors/edit', isLoggedIn, contractor_form.edit_index);
 app.post('/contractors/edit', isLoggedIn, contractor_form.edit_save);
 GET('/contractors/list', () => db.contractors.list());
@@ -93,9 +93,9 @@ GET('/products/list', () => db.products.list());
 
 //app.get('/store_operations', isLoggedIn, store_operations.index);
 app.get('/finance_operations', isLoggedIn, finance_operations.index);
-app.get('/reports/products_balance', isLoggedIn, products_balance.index);
+//app.get('/reports/products_balance', isLoggedIn, products_balance.index);
 
-GET('/reports/products_balance_list', () => db.reports.products_balance_list());
+//GET('/reports/products_balance_list', () => db.reports.products_balance_list());
 GET('/finances/finance_operations_list', () => db.finances.finance_operations_list());
 //GET('/store/store_operations_list', () => db.store.store_operations_list());
 

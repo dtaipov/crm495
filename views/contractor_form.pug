@@ -1,0 +1,25 @@
+extends layout.pug
+
+block content
+    include includes/header.pug
+    .container.site-main
+      form(action="/contractors/edit", method="post")
+        input(type="hidden", name="id", value=contractor.id)
+        .form-group
+          label(for="contractor_name") Имя
+          input.form-control(name="contractor_name", id="contractor_name", value=contractor.name)
+        .form-group
+          label(for="group_id") Группа
+          each val in contractor_group_list
+            .form-check
+              label.form-check-label
+              input.form-check-input(type="radio", name="contractor_group_id", value=val.id checked=(val.id===contractor.contractor_group_id))
+              | #{val.name}
+        if contractor.id
+          .form-group
+            label(for="contact_phone") Телефон
+            input.form-control.col-2(name="contact_phone", value=contractor.contact_phone id="contact_phone")
+          .form-group
+            label(for="contact_address") Адрес
+            input.form-control(name="contact_address", value=contractor.contact_address id="contact_address")
+        button.btn.btn-primary Сохранить

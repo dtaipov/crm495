@@ -1,7 +1,7 @@
 const winston = require('winston');
 const util = require('util');
-const db = require('../../db').db;
-const Sanitize = require('../../utils/Sanitize');
+const db = require('../db/index').db;
+const Sanitize = require('../utils/Sanitize');
 
 module.exports = {
 

@@ -202,3 +202,33 @@
 
 21:40:47 error: current transaction is aborted, commands ignored until end of transaction block
          tx: INSERT INTO "public".finance_operation(product_id, quantity, document_id, money_amount) VALUES('15', '1', '169', '250')
+
+10:59:18 error: invalid input syntax for integer: "#{document.id}"
+         tx: update document set contractor_id='#{document.contractor_id}', payment_method_id='#{val.id}', document_type_id='#{val.id}', creation='2017-09-18T10:29', agent_id=null where id='#{document.id}'
+
+10:59:19 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: delete from store_operation where document_id='#{document.id}'
+
+10:59:19 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: delete from finance_operation where document_id='#{document.id}'
+
+10:59:19 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: INSERT INTO "public".finance_operation(product_id, quantity, document_id, money_amount) VALUES('22', '1', '#{document.id}', '-150')
+
+11:08:13 error: invalid input syntax for integer: "#{val.id}"
+         tx: INSERT INTO document(contractor_id, payment_method_id, document_type_id, creation, agent_id) VALUES('22', '#{val.id}', '#{val.id}', '2017-09-18T10:29', null) RETURNING id
+
+11:10:47 error: Loose request outside an expired connection.
+         tx: delete from store_operation where document_id=409
+
+11:10:47 error: Loose request outside an expired connection.
+         tx: delete from finance_operation where document_id=409
+
+11:10:47 error: Loose request outside an expired connection.
+         tx: INSERT INTO "public".finance_operation(product_id, quantity, document_id, money_amount) VALUES('22', '1', 409, '-150')
+
+15:32:13 error: password authentication failed for user "lwaliurowjjlfc"
+         connection: "postgres://lwaliurowjjlfc:##########################@ec2-54-243-249-165.compute-1.amazonaws.com:5432/db9b6uacnamm2e?ssl=true"
+
+15:33:50 error: no pg_hba.conf entry for host "81.5.83.91", user "obvzbtuijvlfqt", database "db9b6uacnamm2e", SSL off
+         connection: "postgres://obvzbtuijvlfqt:################################################################@ec2-54-243-249-165.compute-1.amazonaws.com:5432/db9b6uacnamm2e"

@@ -19,8 +19,8 @@ module.exports = (rep, pgp) => {
                 'left join contractor_contact c_address on c.id=c_address.contractor_id and c_address.contact_type=\'ADDRESS\' ' +
                 'WHERE c.id = $1', id),
 
-        add: values =>
-            rep.one(sql.add, values, user => user.id),
+        //add: values =>
+            //rep.one(sql.add, values, user => user.id),
 
         edit: values =>
             rep.tx(function (t) {
@@ -30,23 +30,29 @@ module.exports = (rep, pgp) => {
                 console.log("contactPhone:" + contactPhone);
                 var contactAddress = values.contact_address;
                 console.log("contactAddress:" + contactAddress);
-                let queries = [rep.none(sql.edit,
-                    {contractor_name: values.contractor_name,
-                    contractor_group_id: values.contractor_group_id,
-                    id: contractorId
+                if (contractorId) {
+                  let queries = [rep.none(sql.edit,
+                    {
+                      contractor_name: values.contractor_name,
+                      contractor_group_id: values.contractor_group_id,
+                      id: contractorId
                     }
-                ),
+                  ),
                     this.none('delete from contractor_contact where contractor_id=$1', contractorId)
-                ];
-                if (contactPhone) {
+                  ];
+                  if (contactPhone) {
                     queries.push(this.none('insert into contractor_contact (contact_type, value, contractor_id) ' +
-                        'values ($1, $2, $3)', ['PHONE', contactPhone, contractorId]));
-                }
-                if (contactAddress) {
+                      'values ($1, $2, $3)', ['PHONE', contactPhone, contractorId]));
+                  }
+                  if (contactAddress) {
                     queries.push(this.none('insert into contractor_contact (contact_type, value, contractor_id) ' +
-                        'values ($1, $2, $3)', ['ADDRESS', contactAddress, contractorId]));
+                      'values ($1, $2, $3)', ['ADDRESS', contactAddress, contractorId]));
+                  }
+                  return this.batch(queries);
+                } else {
+                  return rep.one(sql.add, values, user => user.id);
                 }
-                return this.batch(queries);
+
             })
                 .then(function (data) {
                     console.log(data);
