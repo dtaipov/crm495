@@ -1,0 +1,58 @@
+extends layout.pug
+
+block content
+    include includes/header.pug
+    .container.site-main
+      a(href="/contractors/add") Новый контрагент
+      table.display(id="contractors-table", cellspacing="0", width="100%")
+        thead
+          tr
+            th ID
+            th Имя
+            th Группа
+            th Создание
+            th Описание
+            th Адрес
+            th Телефон
+        tbody
+          tr
+            td
+            td
+            td
+            td
+            td
+            td
+            td
+
+    script.
+      $(function () {
+
+        $('#contractors-table').DataTable({
+          "ajax": {
+            "url": '/contractors/list',
+            "dataSrc": "data"
+          },
+          "language": {
+            "url": "dataTables.russian.lang"
+          },
+          "order": [[2, 'asc']],
+          "columns": [
+            {
+              "data": "id",
+              "render": function (data, type, full, meta) {
+                return '<a href="/contractors/edit?id=' + data + '">' + data + '</a>';
+              }
+            },
+            {"data": "name"},
+            {"data": "contractor_group_name"},
+            {"data": "creation"},
+            {"data": "description"},
+            {"data": "contact_address"},
+            {"data": "contact_phone"}
+          ],
+          columnDefs: [{
+            targets: 3,
+            render: $.fn.dataTable.render.moment('DD.MM.YYYY HH:mm')
+          }]
+        });
+      });
