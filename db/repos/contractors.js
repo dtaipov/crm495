@@ -1,6 +1,17 @@
 'use strict';
 
-var sql = require('../sql').contractors;
+const sql = require('../sql').contractors;
+
+const addPhoneAndAddressQueries = (rep, queries, phone, address, contractorId) => {
+  if (phone) {
+    queries.push(rep.none('insert into contractor_contact (contact_type, value, contractor_id) ' +
+      'values ($1, $2, $3)', ['PHONE', phone, contractorId]));
+  }
+  if (address) {
+    queries.push(rep.none('insert into contractor_contact (contact_type, value, contractor_id) ' +
+      'values ($1, $2, $3)', ['ADDRESS', address, contractorId]));
+  }
+};
 
 module.exports = (rep, pgp) => {
 
@@ -24,35 +35,30 @@ module.exports = (rep, pgp) => {
 
         edit: values =>
             rep.tx(function (t) {
-                var contractorId = values.id;
-                console.log("contractorId:" + contractorId);
-                var contactPhone = values.contact_phone;
-                console.log("contactPhone:" + contactPhone);
-                var contactAddress = values.contact_address;
-                console.log("contactAddress:" + contactAddress);
-                if (contractorId) {
-                  let queries = [rep.none(sql.edit,
-                    {
-                      contractor_name: values.contractor_name,
-                      contractor_group_id: values.contractor_group_id,
-                      id: contractorId
-                    }
-                  ),
-                    this.none('delete from contractor_contact where contractor_id=$1', contractorId)
-                  ];
-                  if (contactPhone) {
-                    queries.push(this.none('insert into contractor_contact (contact_type, value, contractor_id) ' +
-                      'values ($1, $2, $3)', ['PHONE', contactPhone, contractorId]));
+              let contractorId = values.id;
+              const contactPhone = values.contact_phone;
+              const contactAddress = values.contact_address;
+              const queries = [];
+              if (contractorId) {
+                queries.push(
+                  rep.none(sql.edit,
+                  {
+                    contractor_name: values.contractor_name,
+                    contractor_group_id: values.contractor_group_id,
+                    id: contractorId
                   }
-                  if (contactAddress) {
-                    queries.push(this.none('insert into contractor_contact (contact_type, value, contractor_id) ' +
-                      'values ($1, $2, $3)', ['ADDRESS', contactAddress, contractorId]));
-                  }
-                  return this.batch(queries);
-                } else {
-                  return rep.one(sql.add, values, user => user.id);
-                }
-
+                ));
+                queries.push(
+                  rep.none('delete from contractor_contact where contractor_id=$1', contractorId)
+                );
+                addPhoneAndAddressQueries(rep, queries, contactPhone, contactAddress, contractorId);
+              } else {
+                queries.push(
+                  rep.one(sql.add, values, user => user.id)
+                );
+              }
+              // todo process returning id and save phone and email on contractor insert
+              return this.batch(queries);
             })
                 .then(function (data) {
                     console.log(data);
