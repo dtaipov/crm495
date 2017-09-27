@@ -18,13 +18,15 @@ module.exports = (rep, pgp) => {
         if (values.id) {
           const productImage = values.product_image;
           let queries = [this.none('UPDATE product\n' +
-            'SET name=$1,service=$2,price=$3,product_group_id=$4\n' +
+            'SET name=$1,service=$2,price=$3,product_group_id=$4,show_to_public=$6\n' +
             'WHERE id=$5;',
             [values.product_name,
               values.service,
               values.price,
               values.product_group_id,
-              values.id]
+              values.id,
+              values.show_to_public
+            ]
           )
           ];
           if (productImage) {
