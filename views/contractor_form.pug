@@ -9,12 +9,12 @@ block content
           label(for="contractor_name") Имя
           input.form-control(name="contractor_name", id="contractor_name", value=contractor.name)
         .form-group
-          label(for="group_id") Группа
+          label Группа
           each val in contractor_group_list
             .form-check
-              label.form-check-label
-              input.form-check-input(type="radio", name="contractor_group_id", value=val.id checked=(val.id===contractor.contractor_group_id))
-              | #{val.name}
+              label.form-check-label(for="contractor_group_id" + val.id)
+                input.form-check-input.mr-1(type="radio", name="contractor_group_id", id="contractor_group_id" + val.id, value=val.id checked=(val.id===contractor.contractor_group_id))
+                | #{val.name}
         if contractor.id
           .form-group
             label(for="contact_phone") Телефон
