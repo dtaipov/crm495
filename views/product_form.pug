@@ -14,23 +14,23 @@ block content
               input.form-control(name="product_image", id="product_image", value="")
           .form-check
             label.form-check-label
-            input.form-check-input(type="radio", value="FALSE", name="service", checked=(product.service===false))
+            input.form-check-input(type="radio", value="FALSE", name="service", checked=(!product.service))
             | Продукт
-            label.form-check-label
-            input.form-check-input(type="radio", value="TRUE", name="service", checked=(product.service===true))
+            label.form-check-label.ml-2
+            input.form-check-input(type="radio", value="TRUE", name="service", checked=(!!product.service))
             | Услуга
           .form-group
             label(for="price") Цена
             input.form-control.col-md-2(type="number", name="price", id="price", value=product.price)
           .form-check
             label.form-check-label
-            input.form-check-input(type="checkbox", value="TRUE", name="show_to_public", checked=product.show_to_public)
-            | Показывать на публичном сайте
+              input.form-check-input.mr-1(type="checkbox", value="TRUE", name="show_to_public", checked=product.show_to_public)
+              | Показывать на публичном сайте
           .form-group
-            label(for="group_id") Группа
+            label Группа
             each val in product_group_list
               .form-check
-                label.form-check-label
-                input.form-check-input(type="radio", name="product_group_id", value=val.id checked=(val.id===product.product_group_id))
-                | #{val.name}
+                label.form-check-label(for="product_group_id" + val.id)
+                  input.form-check-input.mr-1(type="radio", name="product_group_id", id="product_group_id" + val.id, value=val.id checked=(val.id===product.product_group_id))
+                  | #{val.name}
           button.btn.btn-primary Сохранить
