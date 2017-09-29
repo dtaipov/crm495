@@ -11,7 +11,7 @@ block content
           if product.id
             .form-group
               label(for="product_image") Ссылка на изображение
-              input.form-control(name="product_image", id="product_image", value="")
+              input.form-control(name="product_image", id="product_image", value=product.image_url)
           .form-check
             label.form-check-label
             input.form-check-input(type="radio", value="FALSE", name="service", checked=(!product.service))

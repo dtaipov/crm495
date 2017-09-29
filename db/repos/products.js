@@ -8,7 +8,7 @@ module.exports = (rep, pgp) => {
       rep.any(sql.list),
 
     find: id =>
-      rep.oneOrNone('SELECT * FROM product WHERE id = $1', id),
+      rep.oneOrNone(`SELECT p.*, itp.image_url FROM product p left join image_to_product itp on p.id=itp.product_id WHERE p.id = $1`, id),
 
     //add: values =>
       //rep.one(sql.add, values, user => user.id),
@@ -30,6 +30,8 @@ module.exports = (rep, pgp) => {
           )
           ];
           if (productImage) {
+            // сейчас только одна картинка может быть привязана к товару. Поэтому удаляем все картинки для товара перед вставкой новой картинки
+            queries.push(this.none('delete from image_to_product where product_id=$1', values.id));
             queries.push(this.none('insert into image_to_product (product_id, image_url, active) VALUES($1, $2, $3)',
               [values.id, productImage, true]));
           }

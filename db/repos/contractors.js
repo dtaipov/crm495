@@ -16,11 +16,6 @@ const addPhoneAndAddressQueries = (rep, queries, phone, address, contractorId) =
 module.exports = (rep, pgp) => {
 
     return {
-
-        // Tries to find a product from id;
-        /*find: id =>
-            rep.oneOrNone('SELECT * FROM Products WHERE id = $1', id),*/
-
         list: () =>
             rep.any(sql.list),
 
