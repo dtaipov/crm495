@@ -1,18 +1,70 @@
 include ./menu
 
-nav(class="navbar navbar-toggleable-md navbar-light bg-faded")
-  button(class="navbar-toggler navbar-toggler-right", type="button", data-toggle="collapse", data-target="#navbarSupportedContent", aria-controls="navbarSupportedContent", aria-expanded="false", aria-label="Toggle navigation")
-    span(class="navbar-toggler-icon")
-  a(class="navbar-brand", href="/documents") CRM495
+nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+  button.navbar-toggler.navbar-toggler-right(type="button", data-toggle="collapse", data-target="#navbarSupportedContent", aria-controls="navbarSupportedContent", aria-expanded="false", aria-label="Toggle navigation")
+    span.navbar-toggler-icon
+  a.navbar-brand(href="/documents") CRM495
 
-  div(class="collapse navbar-collapse", id="navbarSupportedContent")
-    ul(class="navbar-nav mr-auto")
+  div.collapse.navbar-collapse(id="navbarSupportedContent")
+    ul.navbar-nav.mr-auto
       +menuItem('/documents', 'Документы')
       +menuItem('/finance_operations', 'Финансовые операции')
       +menuItem('/products', 'Товары/Услуги')
       +menuItem('/contractors', 'Контрагенты')
-    ul(class="nav navbar-nav ml-auto")
-      li(class="nav-item")
-        span(class="navbar-text") #{user.login}
-      li(class="nav-item")
-        a(href="/logout/", class="nav-link") Выйти
+    ul.nav.navbar-nav.ml-auto
+      li.nav-item
+        .dropdown.mr-1
+          button.btn.btn-secondary.dropdown-toggle(type="button", id="monthMenuButton", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+          .dropdown-menu(aria-labelledby="monthMenuButton")
+            a.dropdown-item.monthButton(href="#") 1
+            a.dropdown-item.monthButton(href="#") 2
+            a.dropdown-item.monthButton(href="#") 3
+            a.dropdown-item.monthButton(href="#") 4
+            a.dropdown-item.monthButton(href="#") 5
+            a.dropdown-item.monthButton(href="#") 6
+            a.dropdown-item.monthButton(href="#") 7
+            a.dropdown-item.monthButton(href="#") 8
+            a.dropdown-item.monthButton(href="#") 9
+            a.dropdown-item.monthButton(href="#") 10
+            a.dropdown-item.monthButton(href="#") 11
+            a.dropdown-item.monthButton(href="#") 12
+      li.nav-item
+        .dropdown.mr-1
+          button.btn.btn-secondary.dropdown-toggle(type="button", id="yearMenuButton", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+          .dropdown-menu(aria-labelledby="yearMenuButton")
+            a.dropdown-item.yearButton(href="#") 2016
+            a.dropdown-item.yearButton(href="#") 2017
+            a.dropdown-item.yearButton(href="#") 2018
+      li.nav-item
+        span.navbar-text #{user.login}
+      li.nav-item
+        a.nav-link(href="/logout/") Выйти
+script.
+  $(function () {
+    function initDocumentsMonthAndYear() {
+      var documentsMonth = localStorage.getItem("documentsMonth");
+      if (!documentsMonth) {
+        documentsMonth = 1
+        localStorage.setItem("documentsMonth", documentsMonth);
+      }
+      $('#monthMenuButton').text(documentsMonth);
+
+      var documentsYear = localStorage.getItem("documentsYear");
+      if (!documentsYear) {
+        documentsYear = 2017
+        localStorage.setItem("documentsYear", documentsYear);
+      }
+      $('#yearMenuButton').text(documentsYear);
+    }
+    initDocumentsMonthAndYear();
+
+    $('.monthButton').on('click', function (elem) {
+      $('#monthMenuButton').text($(this).text());
+      localStorage.setItem('documentsMonth', $(this).text());
+    })
+
+    $('.yearButton').on('click', function (elem) {
+      $('#yearMenuButton').text($(this).text());
+      localStorage.setItem('documentsYear', $(this).text());
+    })
+  });
