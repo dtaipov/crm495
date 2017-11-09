@@ -75,7 +75,7 @@ app.get('/logout', loginForm.logout);
 app.get('/documents', isLoggedIn, documents.index);
 app.get('/documents/edit', isLoggedIn, document_form.edit_index);
 app.post('/documents/edit', isLoggedIn, document_form.edit_save);
-GET('/documents/list', () => db.documents.list());
+GET('/documents/list', req => db.documents.list({user_id: req.user.id}));
 
 app.get('/contractors', isLoggedIn, contractors.index);
 //app.get('/contractors/add', isLoggedIn, contractor_form.add_index);

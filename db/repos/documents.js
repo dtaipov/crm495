@@ -103,8 +103,8 @@ module.exports = (rep, pgp) => {
             rep.one(sql.add_product_remainder, values, user => user.id),
 
         // Returns all product records;
-        list: () =>
-            rep.any(sql.list),
+        list: values =>
+            rep.any(sql.list, values),
 
         document_types_list: () =>
             rep.any(sql.document_types_list),

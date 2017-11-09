@@ -26,5 +26,6 @@ select
 where
  d.active = TRUE and
  d.document_type_id = dt.id and
- d.payment_method_id = pm.id
+ d.payment_method_id = pm.id and
+ (${user_id} is null or ${user_id} = d.user_id)
 order by d.id desc
