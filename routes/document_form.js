@@ -98,30 +98,31 @@ module.exports = {
     edit_save: function(req, res, next) {
         var agentId = parseInt(req.body.agent_id);
         db.documents.edit(
-            {
-                document_id: req.body.id,
-                contractor_id: req.body.contractor_id,
-                payment_method_id: req.body.payment_method_id,
-                document_type_id: req.body.document_type_id,
-                creation: req.body.creation,
-                agent_id: isNaN(agentId) ? null : agentId,
-                store_products_ids: Sanitize.sanitizeArray(req.body.store_products_ids),
-                store_quantities: Sanitize.sanitizeArray(req.body.store_quantities),
-                finance_products_ids: Sanitize.sanitizeArray(req.body.finance_products_ids),
-                finance_products_quantities: Sanitize.sanitizeArray(req.body.finance_products_quantities),
-                finance_money_amounts: Sanitize.sanitizeArray(req.body.finance_money_amounts),
-            }
+          {
+            document_id: req.body.id,
+            contractor_id: req.body.contractor_id,
+            payment_method_id: req.body.payment_method_id,
+            document_type_id: req.body.document_type_id,
+            creation: req.body.creation,
+            agent_id: isNaN(agentId) ? null : agentId,
+            store_products_ids: Sanitize.sanitizeArray(req.body.store_products_ids),
+            store_quantities: Sanitize.sanitizeArray(req.body.store_quantities),
+            finance_products_ids: Sanitize.sanitizeArray(req.body.finance_products_ids),
+            finance_products_quantities: Sanitize.sanitizeArray(req.body.finance_products_quantities),
+            finance_money_amounts: Sanitize.sanitizeArray(req.body.finance_money_amounts),
+            user_id: req.user.id,
+          }
         )
         .then(function (data) {
-            console.log("success data: ");
-            console.log(data);
-            res.redirect("/documents");
+          console.log("success data: ");
+          console.log(data);
+          res.redirect("/documents");
         })
         .catch(function (error) {
-            res.json({
-                success: false,
-                error: error.message || error
-            });
+          res.json({
+            success: false,
+            error: error.message || error
+          });
         });
     }
 

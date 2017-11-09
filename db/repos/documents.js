@@ -57,22 +57,20 @@ module.exports = (rep, pgp) => {
         find: id =>
             rep.oneOrNone('SELECT * FROM document WHERE id = $1', id),
 
-        add: values =>
-            rep.one(sql.add, values, user => user.id),
-
         edit: values =>
             rep.tx(function (t) {
                 var documentId = values.document_id;
                 console.log("documentId:" + documentId);
                 let queries = [];
                 if (!documentId) {
-                    t.one('INSERT INTO document(contractor_id, payment_method_id, document_type_id, creation, agent_id)' +
-                        ' VALUES($1, $2, $3, $4, $5) RETURNING id',
+                    t.one('INSERT INTO document(contractor_id, payment_method_id, document_type_id, creation, agent_id, user_id)' +
+                        ' VALUES($1, $2, $3, $4, $5, $6) RETURNING id',
                     [values.contractor_id,
                         values.payment_method_id,
                         values.document_type_id,
                         values.creation,
-                            values.agent_id])
+                        values.agent_id,
+                        values.user_id])
                         .then(document => {
                             return t.batch(
                                 getAfterQueries(document.id, values, this)
