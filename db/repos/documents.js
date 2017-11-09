@@ -58,43 +58,43 @@ module.exports = (rep, pgp) => {
             rep.oneOrNone('SELECT * FROM document WHERE id = $1', id),
 
         edit: values =>
-            rep.tx(function (t) {
-                var documentId = values.document_id;
-                console.log("documentId:" + documentId);
-                let queries = [];
-                if (!documentId) {
-                    t.one('INSERT INTO document(contractor_id, payment_method_id, document_type_id, creation, agent_id, user_id)' +
-                        ' VALUES($1, $2, $3, $4, $5, $6) RETURNING id',
-                    [values.contractor_id,
-                        values.payment_method_id,
-                        values.document_type_id,
-                        values.creation,
-                        values.agent_id,
-                        values.user_id])
-                        .then(document => {
-                            return t.batch(
-                                getAfterQueries(document.id, values, this)
-                            );
-                        });
-                } else {
-                    let queries = [this.none('update document set contractor_id=$1, payment_method_id=$2, document_type_id=$3, creation=$4, agent_id=$5 where id=$6',
-                        [values.contractor_id,
-                            values.payment_method_id,
-                            values.document_type_id,
-                            values.creation,
-                        values.agent_id,
-                        documentId]
-                    )
-                ];
-                    return this.batch(queries.concat(getAfterQueries(documentId, values, this)));
-    }
-                //return this.batch(queries);
-            })
+          rep.tx(function (t) {
+            const documentId = values.document_id;
+            console.log("documentId:" + documentId);
+            let queries = [];
+            if (!documentId) {
+              t.one('INSERT INTO document(contractor_id, payment_method_id, document_type_id, creation, agent_id, user_id)' +
+                ' VALUES($1, $2, $3, $4, $5, $6) RETURNING id',
+                [values.contractor_id,
+                  values.payment_method_id,
+                  values.document_type_id,
+                  values.creation,
+                  values.agent_id,
+                  values.user_id])
+                .then(document => {
+                  return t.batch(
+                    getAfterQueries(document.id, values, this)
+                  );
+                });
+            } else {
+              let queries = [this.none('update document set contractor_id=$1, payment_method_id=$2, document_type_id=$3, creation=$4, agent_id=$5 where id=$6',
+                [values.contractor_id,
+                  values.payment_method_id,
+                  values.document_type_id,
+                  values.creation,
+                  values.agent_id,
+                  documentId]
+              )
+              ];
+              return this.batch(queries.concat(getAfterQueries(documentId, values, this)));
+            }
+            //return this.batch(queries);
+          })
             .then(data => {
-                console.log(data);
+              console.log(data);
             })
             .catch(error => {
-                console.log(error); // printing the error;
+              console.log(error); // printing the error;
             }),
 
         // Adds a new record and returns the new id;
@@ -116,7 +116,7 @@ module.exports = (rep, pgp) => {
             rep.any('select id, name from contractor where is_agent = TRUE order by name'),
 
         // Returns the total number of products;
-        total: () =>
-            rep.one('SELECT count(*) FROM Products', [], a => +a.count)
+        total: values =>
+            rep.one('SELECT count(*) FROM document where active=true and user_id=$1 and $2=\'demo\'', values)
     };
 };
