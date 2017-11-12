@@ -16,8 +16,8 @@ const addPhoneAndAddressQueries = (rep, queries, phone, address, contractorId) =
 module.exports = (rep, pgp) => {
 
     return {
-        list: () =>
-            rep.any(sql.list),
+        list: values =>
+            rep.any(sql.list, values),
 
         find: id =>
             rep.oneOrNone('SELECT c.*, c_phone.value contact_phone, c_address.value contact_address FROM contractor c ' +
@@ -49,7 +49,7 @@ module.exports = (rep, pgp) => {
                 addPhoneAndAddressQueries(rep, queries, contactPhone, contactAddress, contractorId);
               } else {
                 queries.push(
-                  rep.one(sql.add, values, user => user.id)
+                  rep.one(sql.add, values)
                 );
               }
               // todo process returning id and save phone and email on contractor insert
