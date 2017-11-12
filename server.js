@@ -92,11 +92,11 @@ app.post('/products/edit', isLoggedIn, product_form.edit_save);
 GET('/products/list', () => db.products.list());
 
 //app.get('/store_operations', isLoggedIn, store_operations.index);
-app.get('/finance_operations', isLoggedIn, finance_operations.index);
+//app.get('/finance_operations', isLoggedIn, finance_operations.index);
 //app.get('/reports/products_balance', isLoggedIn, products_balance.index);
 
 //GET('/reports/products_balance_list', () => db.reports.products_balance_list());
-GET('/finances/finance_operations_list', () => db.finances.finance_operations_list());
+//GET('/finances/finance_operations_list', () => db.finances.finance_operations_list());
 //GET('/store/store_operations_list', () => db.store.store_operations_list());
 
 function GET(url, handler) {
