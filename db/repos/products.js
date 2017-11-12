@@ -52,8 +52,8 @@ module.exports = (rep, pgp) => {
         //list_only_products: () =>
             //rep.any('SELECT * FROM product where service = FALSE order by name'),
 
-        all: () =>
-            rep.any('SELECT * FROM product order by name'),
+        all: values =>
+            rep.any('SELECT * FROM product where user_id=${user_id} order by name', values),
 
     };
 };

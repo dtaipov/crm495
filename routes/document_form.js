@@ -67,7 +67,7 @@ module.exports = {
                 t.documents.document_types_list(),
                 t.documents.payment_methods_list(),
                 //t.contractors.list(),
-                t.products.all(),
+                t.products.all({user_id: req.user.id}),
                 t.documents.agents_list(),
                 req.query.id ? t.documents.find(req.query.id) : null,
                 req.query.id ? t.finances.finance_operation_by_document_id(req.query.id) : null
