@@ -4,11 +4,11 @@ const sql = require('../sql').products;
 module.exports = (rep, pgp) => {
 
   return {
-    list: () =>
-      rep.any(sql.list),
+    list: values =>
+      rep.any(sql.list, values),
 
-    find: id =>
-      rep.oneOrNone(`SELECT p.*, itp.image_url FROM product p left join image_to_product itp on p.id=itp.product_id WHERE p.id = $1`, id),
+    find: (id, user_id) =>
+      rep.oneOrNone(`SELECT p.*, itp.image_url FROM product p left join image_to_product itp on p.id=itp.product_id WHERE p.id = $1, p.user_id=$2`, [id, user_id]),
 
     //add: values =>
       //rep.one(sql.add, values, user => user.id),
@@ -37,7 +37,7 @@ module.exports = (rep, pgp) => {
           }
           return this.batch(queries);
         } else {
-          return rep.one(sql.add, values, user => user.id);
+          return rep.one(sql.add, values);
         }
       }).then(data => {
           console.log(data);
@@ -49,8 +49,8 @@ module.exports = (rep, pgp) => {
         product_group_list: () =>
             rep.any(sql.product_group_list),
 
-        list_only_products: () =>
-            rep.any('SELECT * FROM product where service = FALSE order by name'),
+        //list_only_products: () =>
+            //rep.any('SELECT * FROM product where service = FALSE order by name'),
 
         all: () =>
             rep.any('SELECT * FROM product order by name'),

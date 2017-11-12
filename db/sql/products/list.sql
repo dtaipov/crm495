@@ -7,4 +7,4 @@ select
  from product p,
  product_group pg
 where
- pg.id = p.product_group_id
+ pg.id = p.product_group_id and p.user_id = ${user_id}

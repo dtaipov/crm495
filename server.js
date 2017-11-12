@@ -83,11 +83,9 @@ app.post('/contractors/edit', isLoggedIn, contractor_form.edit_save);
 GET('/contractors/list', req => db.contractors.list({user_id: req.user.id}));
 
 app.get('/products', isLoggedIn, products.index);
-//app.get('/products/add', isLoggedIn, product_form.add_index);
-//app.post('/products/add', isLoggedIn, product_form.add_save); // заменить на edit_save
 app.get('/products/edit', isLoggedIn, product_form.edit_index);
 app.post('/products/edit', isLoggedIn, product_form.edit_save);
-GET('/products/list', () => db.products.list());
+GET('/products/list', req => db.products.list({user_id: req.user.id}));
 
 //app.get('/store_operations', isLoggedIn, store_operations.index);
 //app.get('/finance_operations', isLoggedIn, finance_operations.index);
