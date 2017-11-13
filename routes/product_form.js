@@ -53,7 +53,7 @@ module.exports = {
     db.task(t=> {
       return t.batch([
         t.products.product_group_list(),
-        req.query.id ? t.products.find(req.query.id, req.user.id) : null
+        req.query.id ? t.products.find({id: req.query.id, user_id: req.user.id}) : null
       ]);
     })
       .then((data) => {

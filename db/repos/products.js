@@ -7,8 +7,8 @@ module.exports = (rep, pgp) => {
     list: values =>
       rep.any(sql.list, values),
 
-    find: (id, user_id) =>
-      rep.oneOrNone(`SELECT p.*, itp.image_url FROM product p left join image_to_product itp on p.id=itp.product_id WHERE p.id = $1, p.user_id=$2`, [id, user_id]),
+    find: values =>
+      rep.oneOrNone('SELECT p.*, itp.image_url FROM product p left join image_to_product itp on p.id=itp.product_id WHERE p.id = ${id} and p.user_id=${user_id}', values),
 
     //add: values =>
       //rep.one(sql.add, values, user => user.id),
