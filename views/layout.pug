@@ -20,6 +20,34 @@ html
     script(src="/jquery-ui-1.12.1/jquery-ui.min.js")
     script(src="/DataTables-1.10.12/media/js/jquery.dataTables.js")
     script(src="/js/common.js")
+    if env.NODE_ENV === "production"
+      <!-- Yandex.Metrika counter -->
+      script.
+        (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+        try {
+        w.yaCounter46628793 = new Ya.Metrika({
+        id:46628793,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+        });
+        } catch(e) { }
+        });
+        var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+        if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+        })(document, window, "yandex_metrika_callbacks");
+      noscript
+        div
+          img(src="https://mc.yandex.ru/watch/46628793", style="position:absolute; left:-9999px;", alt="")
+      <!-- /Yandex.Metrika counter -->
   body
     .wrapper
         block content
