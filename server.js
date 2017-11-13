@@ -48,6 +48,7 @@ const cookieParserWithSecrets = cookieParser('novanova');
 app.use(cookieParserWithSecrets);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.locals.env = process.env;
 const port = process.env.PORT || 5000;
 
 const SESSION_ID_COOKIE_NAME = "session" + port;
