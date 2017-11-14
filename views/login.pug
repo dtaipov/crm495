@@ -16,3 +16,25 @@ block content
         label(for="password") Пароль
         input(type="password", class="form-control col-3", id="password", name="password", placeholder="Введите пароль")
       button(class="btn btn-primary") Войти
+    br
+    p
+      strong Логин/пароль для демо входа:
+      a.btn.btn-link(href="#" id="demoBtn") demo/demo
+    p
+      strong Исходный код:
+      a.btn.btn-link(href="https://github.com/dtaipov/crm495" target="_blank") https://github.com/dtaipov/crm495
+    br
+    .embed-responsive.embed-responsive-16by9
+      iframe(src="https://www.youtube.com/embed/bx7zuFVF98s", frameborder="0", allowfullscreen)
+
+  script.
+    $(function () {
+      $("#demoBtn").click(function () {
+        setLoginPassword();
+      })
+    });
+
+    function setLoginPassword() {
+      $("#username").val("demo");
+      $("#password").val("demo");
+    }
