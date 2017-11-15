@@ -61,6 +61,16 @@ app.use(passport.session());
 
 app.set('port', port);
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(function (req, res, next) {
+    if (!/https/.test(req.protocol)) {
+      res.redirect("https://" + req.headers.host + req.url);
+    } else {
+      return next();
+    }
+  });
+}
+
 app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
