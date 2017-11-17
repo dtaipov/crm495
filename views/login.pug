@@ -1,10 +1,19 @@
 extends layout.pug
 
 block content
-  nav(class="navbar")
-    a(class="navbar-brand", href="/") CRM495
+  nav.navbar
 
   .container
+    .jumbotron
+      h1.display-3 CRM495
+      p.lead Простая бесплатная CRM система с открытым исходным кодом
+      hr.my-4
+      p Позволяет вести книгу доходов и расходов, базу данных клиентов и базу данных товаров и услуг
+      p.lead
+        form(action="/login", method="post")
+          input(type="hidden" name="username" value="demo")
+          input(type="hidden" name="password" value="demo")
+          button.btn.btn-primary(type="submit") Демо
     .row
       .col
         label.error_message #{message}
