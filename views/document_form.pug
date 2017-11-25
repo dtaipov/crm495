@@ -43,10 +43,10 @@ block content
                   | #{val.name}
       .form-group
           label(for='creation') Дата
-          input#creation.form-control.col-3(type='datetime-local', name='creation', value=creation)
+          input#creation.form-control.col-md-3(type='datetime', name='creation', value=creation)
       .form-group
           label(for='agent_id') Агент
-          select#agent_id.form-control.col-2(name='agent_id')
+          select#agent_id.form-control.col-md-2(name='agent_id')
               option(value='')
               each val in agents_list
                 option(value=val.id selected=(document.agent_id === val.id)) #{val.name}
