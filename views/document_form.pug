@@ -42,8 +42,11 @@ block content
                   input.form-check-input.mr-1(type='radio', name='document_type_id', value=val.id checked=(document.document_type_id === val.id))
                   | #{val.name}
       .form-group
-          label(for='creation') Дата
-          input#creation.form-control.col-md-3(type='datetime', name='creation', value=creation)
+          label(for='creation_date') Дата
+          input#creation_date.form-control.col-md-2(type='date', name='creation_date', value=creation_date)
+      .form-group
+          label(for='creation_time') Время
+          input#creation_time.form-control.col-md-2(type='time', name='creation_time', value=creation_time)
       .form-group
           label(for='agent_id') Агент
           select#agent_id.form-control.col-md-2(name='agent_id')
@@ -185,4 +188,5 @@ block content
             addFinanceOperationInputs(val.product_id, val.quantity, val.money_amount);
           }
         }
+        countTotal();
     });

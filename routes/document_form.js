@@ -86,7 +86,8 @@ module.exports = {
                     document_type_id: 1,
                     payment_method_id: 1,
                 },
-                creation: data[4] ? moment(data[4].creation).format("YYYY-MM-DDTHH:mm") : new Date().toISOString().split('.')[0],
+                creation_date: data[4] ? moment(data[4].creation).format("YYYY-MM-DD") : new Date().toISOString().split('.')[0].split('T')[0],
+                creation_time: data[4] ? moment(data[4].creation).format("HH:mm") : "12:00",
                 document_finance_operations: data[5]
             });
         })
@@ -113,7 +114,7 @@ module.exports = {
                 contractor_id: req.body.contractor_id,
                 payment_method_id: req.body.payment_method_id,
                 document_type_id: req.body.document_type_id,
-                creation: req.body.creation,
+                creation: req.body.creation_date + "T" + req.body.creation_time,
                 agent_id: isNaN(agentId) ? null : agentId,
                 store_products_ids: Sanitize.sanitizeArray(req.body.store_products_ids),
                 store_quantities: Sanitize.sanitizeArray(req.body.store_quantities),
