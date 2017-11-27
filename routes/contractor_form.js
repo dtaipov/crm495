@@ -52,11 +52,10 @@ module.exports = {
       db.task(t=> {
         return t.batch([
           t.contractors.contractor_group_list(),
-          req.query.id? t.contractors.find(req.query.id) : {}
+          req.query.id? t.contractors.find(req.query.id) : {contractor_group_id: 1}
         ]);
       })
         .then((data) => {
-          console.log(data[0]);
           res.render('contractor_form', {
             user: req.user,
             contractor_group_list: data[0],
