@@ -5,7 +5,7 @@ block content
     .container.site-main
       a(href="/documents/edit") Новый документ
       br
-      table(id="documents-table", class="display", cellspacing="0", width="100%")
+      table.display(id="documents-table", cellspacing="0", width="100%")
         thead
           tr
             th ID
@@ -16,12 +16,6 @@ block content
             th Описание
             th Агент
             th Счет
-        tfoot
-          tr
-            th(colspan="5", style="text-align:right") Total:
-            th
-            th
-            th
         tbody
           tr
             td
@@ -32,6 +26,7 @@ block content
             td
             td
             td
+
     script.
       $(function() {
         $('#documents-table').DataTable( {
@@ -83,7 +78,7 @@ block content
             targets: 1,
             render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
           } ],
-          "footerCallback": function ( row, data, start, end, display ) {
+          /*"footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
 
             // Remove the formatting to get integer data for summation
@@ -114,6 +109,6 @@ block content
             $( api.column( 4 ).footer() ).html(
               "Итого: " + pageTotal +' ('+ total +')'
             );
-          }
+          }*/
         } );
       });
