@@ -48,7 +48,7 @@ block content
             { "data": "document_type_name" },
             { "data": "contractor_name",
               "render": function (data, type, full, meta) {
-                if (full.contractor_address || full.contractor_phone) {
+                /*if (full.contractor_address || full.contractor_phone) {
                   let titleStr = "";
                   if (full.contractor_address) {
                     titleStr = full.contractor_address + " ";
@@ -57,9 +57,9 @@ block content
                     titleStr += "Телефон: " + full.contractor_phone
                   }
                   return '<span title="' + titleStr + '">' + data + '</span>';
-                } else {
+                } else {*/
                   return data;
-                }
+                //}
               }
             },
             { "data": "sum_money_amount",
