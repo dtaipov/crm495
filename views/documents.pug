@@ -16,6 +16,12 @@ block content
             th Описание
             th Агент
             th Счет
+        tfoot
+          tr
+            th(colspan="5", style="text-align:right") Total:
+            th
+            th
+            th
         tbody
           tr
             td
@@ -48,18 +54,17 @@ block content
             { "data": "document_type_name" },
             { "data": "contractor_name",
               "render": function (data, type, full, meta) {
-                /*if (full.contractor_address || full.contractor_phone) {
-                  let titleStr = "";
-                  if (full.contractor_address) {
-                    titleStr = full.contractor_address + " ";
-                  }
-                  if (full.contractor_phone) {
-                    titleStr += "Телефон: " + full.contractor_phone
-                  }
-                  return '<span title="' + titleStr + '">' + data + '</span>';
-                } else {*/
+                if (!full || (!full.contractor_address && !full.contractor_phone)) {
                   return data;
-                //}
+                }
+                var titleStr = "";
+                if (full.contractor_address) {
+                  titleStr = full.contractor_address + " ";
+                }
+                if (full.contractor_phone) {
+                  titleStr += "Телефон: " + full.contractor_phone
+                }
+                return '<span title="' + titleStr + '">' + data + '</span>';
               }
             },
             { "data": "sum_money_amount",
@@ -78,7 +83,7 @@ block content
             targets: 1,
             render: $.fn.dataTable.render.moment( 'DD.MM.YYYY HH:mm' )
           } ],
-          /*"footerCallback": function ( row, data, start, end, display ) {
+          "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
 
             // Remove the formatting to get integer data for summation
@@ -109,6 +114,6 @@ block content
             $( api.column( 4 ).footer() ).html(
               "Итого: " + pageTotal +' ('+ total +')'
             );
-          }*/
+          }
         } );
       });
