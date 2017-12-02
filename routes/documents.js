@@ -13,10 +13,10 @@ module.exports = {
     },*/
 
     index: function (req, res, next) {
-        res.render('documents', {
-            user: req.user
-        });
-
+      res.render('documents', {
+        user: req.user,
+        debug: req.query.debug
+      });
     },
 
     /*get_documents: function(req, res, next) {
