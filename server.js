@@ -34,6 +34,7 @@ const home = require('./routes/home');
 const documents = require('./routes/documents');
 const contractors = require('./routes/contractors');
 const products = require('./routes/products');
+const survey = require('./routes/survey');
 const document_form = require('./routes/document_form');
 const contractor_form = require('./routes/contractor_form');
 const product_form = require('./routes/product_form');
@@ -87,6 +88,9 @@ app.get('/products', isLoggedIn, products.index);
 app.get('/products/edit', isLoggedIn, product_form.edit_index);
 app.post('/products/edit', isLoggedIn, product_form.edit_save);
 GET('/products/list', req => db.products.list({user_id: req.user.id}));
+
+app.get('/survey', survey.index);
+app.post('/survey', survey.edit_save);
 
 //app.get('/store_operations', isLoggedIn, store_operations.index);
 //app.get('/finance_operations', isLoggedIn, finance_operations.index);

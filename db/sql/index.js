@@ -82,6 +82,9 @@ module.exports = {
     },
     reports: {
         products_balance_list: sql('reports/products_balance_list.sql'),
+    },
+    survey: {
+        add: sql('survey/add.sql')
     }
 };
 

@@ -13,7 +13,8 @@ var repos = {
     contractors: require('./repos/contractors'),
     finances: require('./repos/finances'),
     store: require('./repos/store'),
-    reports: require('./repos/reports')
+    reports: require('./repos/reports'),
+    survey: require('./repos/survey')
 };
 
 // pg-promise initialization options:
@@ -35,6 +36,7 @@ var options = {
         obj.finances = repos.finances(obj, pgp);
         obj.store = repos.store(obj, pgp);
         obj.reports = repos.reports(obj, pgp);
+        obj.survey = repos.survey(obj, pgp);
     }
 
 };
