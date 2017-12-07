@@ -6,7 +6,8 @@ module.exports = {
 
   index: function (req, res, next) {
     res.render('survey', {
-      user: req.user
+      user: req.user,
+      req: {}
     });
   },
 
@@ -49,25 +50,31 @@ module.exports = {
               t.survey.add({name: "29", value: req.body["29"]}),
               t.survey.add({name: "30", value: req.body["30"]},
               t.survey.add({name: "ip", value: req.connection.remoteAddress}),
-              t.survey.add({name: "user_agent", value: req.header('user-agent')})
+              t.survey.add({name: "user_agent", value: req.header('user-agent')}),
+              t.survey.add({name: "comment1", value: req.body["comment1"]}),
+              t.survey.add({name: "comment2", value: req.body["comment2"]}),
+              t.survey.add({name: "email", value: req.body["email"]})
               )
             ]);
           })
             .then((data) => {
               res.render('survey', {
-                message: "true"
+                message: "true",
+                req: {}
               });
             })
             .catch(function (error) {
               res.json({
                 success: false,
-                error: error.message || error
+                error: error.message || error,
+                req: {}
               });
             });
         }
         else {
           res.render('survey', {
-            error: "recaptcha"
+            error: "recaptcha",
+            req: req.body
           });
         }
       }

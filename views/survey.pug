@@ -18,19 +18,19 @@ block content
       form(action="/survey" method="POST")
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="1")
+            input.form-check-input.mr-1(type="checkbox", name="1", checked=req["1"]==="on")
             | База данных Клиентов
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="2")
+            input.form-check-input.mr-1(type="checkbox" name="2", checked=req["2"]==="on")
             | База данных Товаров или Услуг
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="3")
+            input.form-check-input.mr-1(type="checkbox" name="3", checked=req["3"]==="on")
             | Книга Доходов и Расходов
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="4")
+            input.form-check-input.mr-1(type="checkbox" name="4", checked=req["4"]==="on")
             | Возможность командной работы. Несколько пользователей системы с разными правами.
         //
           .form-check
@@ -43,74 +43,74 @@ block content
               | Безопасность. Пользователь без логина или с более низкими правами не может посмотреть/изменить данные, которые доступны только администратору
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="7")
+            input.form-check-input.mr-1(type="checkbox" name="7" checked=req["7"]==="on")
             | Не требует установки на локальный компьютер. Находится в облаке.
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="8")
+            input.form-check-input.mr-1(type="checkbox" name="8" checked=req["8"]==="on")
             | Система находится на локальном сервере компании (не в облаке). Данные хранятся на внутреннем сервере компании.
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="9")
+            input.form-check-input.mr-1(type="checkbox" name="9" checked=req["9"]==="on")
             | Возможность интеграции с 1С
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="10")
+            input.form-check-input.mr-1(type="checkbox" name="10" checked=req["10"]==="on")
             | Task Manager. Ставить задачи пользователям системы со сроками и этапами выполения.
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="11")
+            input.form-check-input.mr-1(type="checkbox" name="11" checked=req["11"]==="on")
             | Система бесплатная
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="12")
+            input.form-check-input.mr-1(type="checkbox" name="12" checked=req["12"]==="on")
             | Система имеет открытый исходный код, который может быть доработан под нужды компании
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="13")
+            input.form-check-input.mr-1(type="checkbox" name="13" checked=req["13"]==="on")
             | Система должна зарекомендовать себя. Иметь много отзывов и использоваться во многих компаниях.
         .form-check
           label(for="comment1") Другое:
-          textarea.form-control(rows="5" name="10" maxlength="400" id="comment1")
+          textarea.form-control(rows="5" name="comment1" maxlength="400" id="comment1" value=req.comment1)
         hr
         strong Какой CRM системой вы пользуетесь сейчас или пользовались раньше?
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="21")
+            input.form-check-input.mr-1(type="checkbox" name="21" checked=req["21"]==="on")
             | Билайн CRM
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="22")
+            input.form-check-input.mr-1(type="checkbox" name="22" checked=req["22"]==="on")
             | BPM Online
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="23")
+            input.form-check-input.mr-1(type="checkbox" name="23" checked=req["23"]==="on")
             | Zoho CRM
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="24")
+            input.form-check-input.mr-1(type="checkbox" name="24" checked=req["24"]==="on")
             | amoCRM
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="25")
+            input.form-check-input.mr-1(type="checkbox" name="25" checked=req["25"]==="on")
             | Мегаплан
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="26")
+            input.form-check-input.mr-1(type="checkbox" name="26" checked=req["26"]==="on")
             | Собственная разработка
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="27")
+            input.form-check-input.mr-1(type="checkbox" name="27" checked=req["27"]==="on")
             | Salesforce
         .form-check
           label.form-check-label
-            input.form-check-input.mr-1(type="checkbox" name="28")
+            input.form-check-input.mr-1(type="checkbox" name="28" checked=req["28"]==="on")
             | Битрикс24
         .form-check
           label(for="comment2") Другое:
-          input.form-control(type="text" name="29" value="" maxlength="100" id="comment2")
+          input.form-control(type="text" name="comment2" maxlength="100" id="comment2" value=req.comment2)
         .form-check
           label(for="email") Email на который отправить результат опроса:
-          input.form-control(type="text" name="30" value="" maxlength="100" id="email")
+          input.form-control(type="text" name="email" maxlength="100" id="email" value=req.email)
         .g-recaptcha(data-sitekey="6LfN_jsUAAAAAL_trGrpv0wBBdpPR4BvceVKmiUf")
         button.btn.btn-primary Сохранить
