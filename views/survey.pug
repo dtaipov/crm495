@@ -1,91 +1,116 @@
 extends layout.pug
 
 block content
+  nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+    a.navbar-brand(href="/") CRM495
+
   .container.site-main
     | Анализ рынка. Урок 3 марафона ТрансформацияРФ
     if message
-      .alert.alert-success(role="alert") Большое спасибо за участие в Опросе! Результаты появятся на этой странице 15.11.2017 и придут на указанный email
-    br
-    br
-    strong Какие требования к системе вы предъявляете
-    form(action="/survey" method="POST")
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="1")
-          | База данных Клиентов
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="2")
-          | База данных Товаров или Услуг
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="3")
-          | Книга Доходов и Расходов
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="4")
-          | Возможность командной работы. Несколько пользователей системы с разными правами.
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="5")
-          | Надежность сервера. Доступ к системе круглосуточно в любой день. Постоянная быстрая скорость доступа к системе.
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="6")
-          | Безопасность. Пользователь без логина или с более низкими правами не может посмотреть/изменить данные, которые доступны только администратору
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="7")
-          | Не требует установки на локальный компьютер. Находится в облаке.
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="8")
-          | Система находится на локальном сервере компании (не в облаке). Данные хранятся на внутреннем сервере компании.
-      .form-check
-        label.form-check-label
-          input.form-check-input(type="checkbox" name="9")
-          | Возможность интеграции с 1С
-      .form-check
-        label(for="comment1") Другое:
-        textarea.form-control(rows="5" name="10" maxlength="400" id="comment1")
-      hr
-      strong Какой CRM системой вы пользуетесь сейчас или пользовались раньше
-      .form-check
-        label.form-check-label
-          input(type="checkbox" name="11")
-          | Билайн CRM
-      .form-check
-        label.form-check-label
-          input(type="checkbox" name="12")
-          | BPM Online
-      .form-check
-        label.form-check-label
-          input(type="checkbox" name="13")
-          | Zoho CRM
-      .form-check
-        label.form-check-label
-          input(type="checkbox" name="14")
-          | amoCRM
-      .form-check
-        label.form-check-label
-          input(type="checkbox" name="15")
-          | Мегаплан
-      .form-check
-        label.form-check-label
-          input(type="checkbox" name="16")
-          | Собственная разработка
-      .form-check
-        label.form-check-label
-          input(type="checkbox" name="17")
-          | Salesforce
-      .form-check
-        label.form-check-label
-          input(type="checkbox" name="18")
-          | Битрикс24
-      .form-check
-        label(for="comment2") Другое:
-        input.form-control(type="text" name="19" value="" maxlength="100" id="comment2")
-      .form-check
-        label(for="email") Email на который отправить результат опроса:
-        input.form-control(type="text" name="20" value="" maxlength="100" id="email")
-      button.btn.btn-primary Сохранить
+      .alert.alert-success(role="alert") Спасибо за участие в Опросе! Результаты появятся на этой странице 20.11.2017 и придут на указанный email
+    if error
+      if error === "recaptcha"
+        .alert.alert-danger(role="alert") Пожалуйста, подтвердите, что вы не робот
+    if !message
+      br
+      br
+      strong Какие требования к СRM системе вы предъявляете?
+      form(action="/survey" method="POST")
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="1")
+            | База данных Клиентов
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="2")
+            | База данных Товаров или Услуг
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="3")
+            | Книга Доходов и Расходов
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="4")
+            | Возможность командной работы. Несколько пользователей системы с разными правами.
+        //
+          .form-check
+            label.form-check-label
+              input.form-check-input.mr-1(type="checkbox" name="5")
+              | Надежность сервера. Доступ к системе круглосуточно в любой день. Постоянная быстрая скорость доступа к системе.
+          .form-check
+            label.form-check-label
+              input.form-check-input.mr-1(type="checkbox" name="6")
+              | Безопасность. Пользователь без логина или с более низкими правами не может посмотреть/изменить данные, которые доступны только администратору
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="7")
+            | Не требует установки на локальный компьютер. Находится в облаке.
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="8")
+            | Система находится на локальном сервере компании (не в облаке). Данные хранятся на внутреннем сервере компании.
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="9")
+            | Возможность интеграции с 1С
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="10")
+            | Task Manager. Ставить задачи пользователям системы со сроками и этапами выполения.
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="11")
+            | Система бесплатная
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="12")
+            | Система имеет открытый исходный код, который может быть доработан под нужды компании
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="13")
+            | Система должна зарекомендовать себя. Иметь много отзывов и использоваться во многих компаниях.
+        .form-check
+          label(for="comment1") Другое:
+          textarea.form-control(rows="5" name="10" maxlength="400" id="comment1")
+        hr
+        strong Какой CRM системой вы пользуетесь сейчас или пользовались раньше?
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="21")
+            | Билайн CRM
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="22")
+            | BPM Online
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="23")
+            | Zoho CRM
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="24")
+            | amoCRM
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="25")
+            | Мегаплан
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="26")
+            | Собственная разработка
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="27")
+            | Salesforce
+        .form-check
+          label.form-check-label
+            input.form-check-input.mr-1(type="checkbox" name="28")
+            | Битрикс24
+        .form-check
+          label(for="comment2") Другое:
+          input.form-control(type="text" name="29" value="" maxlength="100" id="comment2")
+        .form-check
+          label(for="email") Email на который отправить результат опроса:
+          input.form-control(type="text" name="30" value="" maxlength="100" id="email")
+        .g-recaptcha(data-sitekey="6LfN_jsUAAAAAL_trGrpv0wBBdpPR4BvceVKmiUf")
+        button.btn.btn-primary Сохранить
