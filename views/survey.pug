@@ -71,7 +71,7 @@ block content
             | Система должна зарекомендовать себя. Иметь много отзывов и использоваться во многих компаниях.
         .form-check
           label(for="comment1") Другое:
-          textarea.form-control(rows="5" name="comment1" maxlength="400" id="comment1" value=req.comment1)
+          textarea.form-control(rows="5" name="comment1" maxlength="400" id="comment1") #{req.comment1}
         hr
         strong Какой CRM системой вы пользуетесь сейчас или пользовались раньше?
         .form-check
