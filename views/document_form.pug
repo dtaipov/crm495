@@ -127,7 +127,7 @@ block content
       });
 
       function addFinanceOperationInputs(productId, price, quantity) {
-        let index = ++financeProductsIndex;
+        var index = ++financeProductsIndex;
 
         var optionsHTML = "";
         var financeProducts = !{JSON.stringify(finance_products_list)};
@@ -140,7 +140,7 @@ block content
               '</option>';
           }
         }
-        let html =
+        var html =
           '<div class="row">' +
           '<div class="form-group col-sm-3">' +
           '<label for="finance_products_list'+index+'">Товар</label>' +
@@ -182,11 +182,9 @@ block content
         }
 
         var documentFinanceOprations = !{JSON.stringify(document_finance_operations)};
-        if (documentFinanceOprations) {
-          for (var i = 0; i < documentFinanceOprations.length; i++) {
-            var val = documentFinanceOprations[i];
-            addFinanceOperationInputs(val.product_id, val.quantity, val.money_amount);
-          }
+        for (var i = 0; i < documentFinanceOprations.length; i++) {
+          var val = documentFinanceOprations[i];
+          addFinanceOperationInputs(val.product_id, val.quantity, val.money_amount);
         }
         countTotal();
     });

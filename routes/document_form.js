@@ -88,7 +88,7 @@ module.exports = {
                 },
                 creation_date: data[4] ? moment(data[4].creation).format("YYYY-MM-DD") : new Date().toISOString().split('.')[0].split('T')[0],
                 creation_time: data[4] ? moment(data[4].creation).format("HH:mm") : "12:00",
-                document_finance_operations: data[5]
+                document_finance_operations: data[5] ? data[5] : []
             });
         })
         .catch(function (error) {
