@@ -53,6 +53,8 @@ module.exports = {
               t.survey.add({name: "user_agent", value: req.header('user-agent')}),
               t.survey.add({name: "comment1", value: req.body["comment1"]}),
               t.survey.add({name: "comment2", value: req.body["comment2"]}),
+              t.survey.add({name: "comment3", value: req.body["comment3"]}),
+              t.survey.add({name: "comment4", value: req.body["comment4"]}),
               t.survey.add({name: "email", value: req.body["email"]})
               )
             ]);

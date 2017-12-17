@@ -5,9 +5,9 @@ block content
     a.navbar-brand(href="/") CRM495
 
   .container.site-main
-    | Анализ рынка. Урок 3 марафона ТрансформацияРФ
+    | Анализ рынка. Урок 4 марафона ТрансформацияРФ
     if message
-      .alert.alert-success(role="alert") Спасибо за участие в Опросе! Результаты появятся на этой странице 20.11.2017 и придут на указанный email
+      .alert.alert-success(role="alert") Спасибо за участие в Опросе! Результаты появятся на этой странице 29.11.2017 и придут на указанный email
     if error
       if error === "recaptcha"
         .alert.alert-danger(role="alert") Пожалуйста, подтвердите, что вы не робот
@@ -70,7 +70,7 @@ block content
             input.form-check-input.mr-1(type="checkbox" name="13" checked=req["13"]==="on")
             | Система должна зарекомендовать себя. Иметь много отзывов и использоваться во многих компаниях.
         .form-check
-          label(for="comment1") Другое:
+          label(for="comment1") Другое. Какие проблемы хотите решить с помощью CRM системы?:
           textarea.form-control(rows="5" name="comment1" maxlength="400" id="comment1") #{req.comment1}
         hr
         strong Какой CRM системой вы пользуетесь сейчас или пользовались раньше?
@@ -109,6 +109,12 @@ block content
         .form-check
           label(for="comment2") Другое:
           input.form-control(type="text" name="comment2" maxlength="100" id="comment2" value=req.comment2)
+        .form-check
+          label(for="comment3") Негативный опыт при работе с выбранной CRM:
+          textarea.form-control(rows="5" name="comment3" maxlength="400" id="comment3") #{req.comment3}
+        .form-check
+          label(for="comment4") Позитивный опыть при работе с выбранной CRM:
+          textarea.form-control(rows="5" name="comment4" maxlength="400" id="comment4") #{req.comment4}
         .form-check
           label(for="email") Email на который отправить результат опроса:
           input.form-control(type="text" name="email" maxlength="100" id="email" value=req.email)
